@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Meowbook.ViewModels"
+             xmlns:models="clr-namespace:Meowbook.Models"
+             x:DataType="vm:HomeViewModel"
+             x:Class="Meowbook.Views.HomePage"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="#F5F5F5">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="*, Auto" Padding="16,0">
+            <HorizontalStackLayout VerticalOptions="Center" Spacing="6" >
+                <Image Source="logo.jpg" HeightRequest="28" WidthRequest="28" Aspect="AspectFit"/>
+                <Label Text="Meowbook" FontSize="28" FontAttributes="Bold" TextColor="White" VerticalOptions="Center"/>
+                <Ellipse Fill="#FFFFFF" HeightRequest="8" WidthRequest="8" VerticalOptions="Center" Margin="2,8,0,0"/>
+            </HorizontalStackLayout>
+
+            <Frame Grid.Column="1" Padding="0" HeightRequest="40" WidthRequest="40" CornerRadius="20" IsClippedToBounds="True" BorderColor="#FF8C00" VerticalOptions="Center">
+                <Image Source="{Binding LoggedInUserProfileImage}" Aspect="AspectFill"/>
+            </Frame>
+        </Grid>
+    </Shell.TitleView>
+
+    <Grid RowDefinitions="*, Auto">
+        <RefreshView Grid.Row="0"
+                     Command="{Binding LoadPostsCommand}"
+                     IsRefreshing="{Binding IsBusy}"
+                     RefreshColor="#FF8C00">
+
+            <CollectionView ItemsSource="{Binding Posts}"
+                            VerticalOptions="FillAndExpand">
+
+                <CollectionView.Header>
+                    <VerticalStackLayout Spacing="0" Padding="0,8,0,0">
+                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="16,0">
+                            <HorizontalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Users}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:User">
+                                        <Grid HeightRequest="110" WidthRequest="160">
+                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                                                <Image Source="{Binding Avatar}" Aspect="AspectFill" BackgroundColor="#CCCCCC"/>
+                                            </Border>
+
+                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#66000000"/>
+
+                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 4" BackgroundColor="#FF8C00" Padding="6,2" 
+                                                    HorizontalOptions="Start" VerticalOptions="Start" Margin="8">
+                                                <Label Text="LIVE" TextColor="White" FontSize="9" FontAttributes="Bold"/>
+                                            </Border>
+
+                                            <HorizontalStackLayout VerticalOptions="End" Padding="8" Spacing="6">
+                                                <Frame Padding="0" HeightRequest="22" WidthRequest="22" CornerRadius="11" IsClippedToBounds="True" BorderColor="White">
+                                                    <Image Source="{Binding Avatar}" Aspect="AspectFill"/>
+                                                </Frame>
+                                                <Label Text="{Binding Name}" TextColor="White" FontSize="10" FontAttributes="Bold" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </HorizontalStackLayout>
+                        </ScrollView>
+                        <BoxView HeightRequest="14" Color="Transparent"/>
+                    </VerticalStackLayout>
+                </CollectionView.Header>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Post">
+                        <VerticalStackLayout BackgroundColor="White" Margin="0,0,0,12" Spacing="0">
+                            <Grid ColumnDefinitions="Auto, *, Auto" Padding="16,14,16,10" ColumnSpacing="12">
+                                <Frame Padding="0" HeightRequest="44" WidthRequest="44" CornerRadius="22" IsClippedToBounds="True" BorderColor="#FF8C00">
+                                    <Image Source="{Binding UserAvatar}" Aspect="AspectFill"/>
+                                </Frame>
+
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="{Binding UserName}" FontAttributes="Bold" FontSize="15" TextColor="#1C1C1C"/>
+                                    <Label Text="Traveler, Life Lover" FontSize="11" TextColor="#9E9E9E"/>
+                                </VerticalStackLayout>
+
+                                <ImageButton Grid.Column="2" 
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AddFriendCommand}"
+                                             CommandParameter="{Binding .}"
+                                             Source="addfriend.png" HeightRequest="22" WidthRequest="22" BackgroundColor="Transparent" VerticalOptions="Center"/>
+                            </Grid>
+
+                            <Grid Margin="16,0">
+                                <Border StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill" HeightRequest="230" BackgroundColor="#EEEEEE"/>
+                                </Border>
+                                <Border StrokeThickness="0" StrokeShape="RoundRectangle 8" BackgroundColor="#DDFFFFFF" Padding="7,6" HorizontalOptions="End" VerticalOptions="Start" Margin="0,10,10,0">
+                                    <Image Source="bookmark_icon.png" HeightRequest="16" WidthRequest="16"/>
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="Auto, Auto, Auto, *" Padding="16,10,16,6" ColumnSpacing="16">
+                                <HorizontalStackLayout Spacing="5">
+                                    <Image Source="hearticon.png" HeightRequest="20" WidthRequest="20"/>
+                                    <Label Text="{Binding Likes}" FontAttributes="Bold" FontSize="13" TextColor="#1C1C1C" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Grid.Column="1" Spacing="5">
+                                    <Image Source="commenticon.png" HeightRequest="20" WidthRequest="20"/>
+                                    <Label Text="57" FontSize="13" TextColor="#9E9E9E" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Grid.Column="2" Spacing="5">
+                                    <Image Source="shareicon.png" HeightRequest="20" WidthRequest="20"/>
+                                    <Label Text="33" FontSize="13" TextColor="#9E9E9E" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </Grid>
+
+                            <Label Margin="16,0,16,16" LineBreakMode="WordWrap" FontSize="13">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding UserName}" FontAttributes="Bold" TextColor="#1C1C1C"/>
+                                        <Span Text=" "/>
+                                        <Span Text="{Binding Content}" TextColor="#424242"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Footer>
+                    <BoxView HeightRequest="10" Color="Transparent"/>
+                </CollectionView.Footer>
+            </CollectionView>
+        </RefreshView>
+
+        <Grid Grid.Row="1" HeightRequest="68" BackgroundColor="White" ColumnDefinitions="*, *, *, *, *">
+            <BoxView Grid.ColumnSpan="5" HeightRequest="1" VerticalOptions="Start" Color="#E8E8E8"/>
+            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
+                <Image Source="home.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center"/>
+                <Ellipse Fill="#FF8C00" HeightRequest="4" WidthRequest="4" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+            <Image Grid.Column="1" Source="addfriend.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Grid Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
+                <Ellipse Fill="#FF8C00" HeightRequest="52" WidthRequest="52"/>
+                <Label Text="+" TextColor="White" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TranslationY="-2"/>
+            </Grid>
+            <Image Grid.Column="3" Source="hearticon.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Image Grid.Column="4" Source="menu.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+    </Grid>
+</ContentPage>

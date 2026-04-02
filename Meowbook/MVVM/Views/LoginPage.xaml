@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Meowbook.ViewModels"
+             x:Class="Meowbook.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             BackgroundColor="#F5F5F5"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="200, *">
+        <BoxView Grid.Row="0" BackgroundColor="#FF8C00" />
+        <Label Grid.Row="0" Text="Meowbook" VerticalOptions="Center" HorizontalOptions="Center"
+               TextColor="White" FontSize="32" FontAttributes="Bold" FontFamily="PoppinsBold"/>
+
+        <Frame Grid.Row="1" Margin="0,-30,0,0" BackgroundColor="White" 
+               CornerRadius="30" HasShadow="True" Padding="20,30" BorderColor="LightGrey">
+
+            <Grid RowDefinitions="*, Auto">
+                <ScrollView Grid.Row="0">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Welcome Back" FontSize="26" FontAttributes="Bold" TextColor="#1C1C1C" FontFamily="PoppinsMedium"/>
+                        <Label Text="Enter your details below" TextColor="Gray" Margin="0,0,0,20" FontFamily="InterRegular"/>
+
+                        <Border Stroke="#FF8C00">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Entry Placeholder="Username" 
+                                   Text="{Binding Username}" 
+                                   HeightRequest="55" 
+                                   TextColor="Black"
+                                   Keyboard="Plain"/>
+                        </Border>
+
+                        <Border Stroke="#FF8C00">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Entry Placeholder="Password" 
+                                   Text="{Binding Password}" 
+                                   IsPassword="True" 
+                                   HeightRequest="55" 
+                                   TextColor="Black"/>
+                        </Border>
+
+                        <Label Text="Forgot password?" TextColor="#FF8C00" HorizontalOptions="End" FontFamily="PoppinsMedium">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Button Text="Sign In" 
+                                Command="{Binding LoginCommand}"
+                                BackgroundColor="#FF8C00" 
+                                HeightRequest="60" 
+                                CornerRadius="12" 
+                                Margin="0,10" 
+                                FontFamily="PoppinsMedium"
+                                TextColor="White"/>
+
+                        <Label Text="Or sign in with" HorizontalOptions="Center" TextColor="Gray" FontFamily="InterRegular"/>
+
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="30" Margin="0,10">
+                            <Frame BackgroundColor="#EBECF9" BorderColor="Transparent" Padding="10">
+                                <ImageButton Source="search.png" HeightRequest="25" WidthRequest="25" BackgroundColor="Transparent" />
+                            </Frame>
+                            <Frame BackgroundColor="#EBECF9" BorderColor="Transparent" Padding="10">
+                                <ImageButton Source="facebook.png" HeightRequest="25" WidthRequest="25" BackgroundColor="Transparent" />
+                            </Frame>
+                        </HorizontalStackLayout>
+
+                        <Label Text="Don't have an account? Sign Up" HorizontalOptions="Center" TextColor="#1C1C1C" FontFamily="InterRegular">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToRegisterCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <ActivityIndicator Grid.Row="0" Grid.RowSpan="2"
+                                   IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="#FF8C00"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center" />
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>
