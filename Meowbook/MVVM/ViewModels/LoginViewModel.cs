@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Meowbook.Services;
 using Meowbook.Models;
@@ -47,9 +47,9 @@ namespace Meowbook.ViewModels
 
                 if (user != null)
                 {
-                    // Success! 
-                    // TIP: You should save 'user.Id' globally here so your 
-                    // HomePage knows whose profile image to show
+                    // Success! Save globally
+                    GlobalState.CurrentUserId = user.Id;
+                    GlobalState.CurrentUser = user;
 
                     await Shell.Current.GoToAsync("//HomePage");
                 }

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Meowbook.Views.BottomNavBar"
+             BackgroundColor="Transparent">
+
+    <!-- Outer Grid: bar + overlapping FAB -->
+    <Grid HeightRequest="80">
+
+        <!-- White bar at the bottom -->
+        <Border Margin="0,20,0,0"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                VerticalOptions="Fill">
+            <Border.Shadow>
+                <Shadow Brush="Black" Opacity="0.10" Radius="16" Offset="0,-3"/>
+            </Border.Shadow>
+
+            <!-- 5 columns: Home | Friends | [FAB gap] | Notifications | Profile -->
+            <Grid ColumnDefinitions="*,*,68,*,*" Padding="0,10,0,0">
+
+                <!-- HOME -->
+                <StackLayout Grid.Column="0"
+                             Spacing="3"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+                    <Label x:Name="HomeIcon"
+                           Text="⌂"
+                           FontSize="24"
+                           HorizontalOptions="Center"
+                           TextColor="#BBBBBB"/>
+                    <Ellipse x:Name="HomeDot"
+                             Fill="#4A90D9"
+                             WidthRequest="5"
+                             HeightRequest="5"
+                             HorizontalOptions="Center"
+                             IsVisible="False"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <!-- FRIENDS / ADD FRIEND -->
+                <StackLayout Grid.Column="1"
+                             Spacing="3"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+                    <Label x:Name="FriendsIcon"
+                           Text="👥"
+                           FontSize="22"
+                           HorizontalOptions="Center"
+                           TextColor="#BBBBBB"/>
+                    <Ellipse x:Name="FriendsDot"
+                             Fill="#4A90D9"
+                             WidthRequest="5"
+                             HeightRequest="5"
+                             HorizontalOptions="Center"
+                             IsVisible="False"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFriendsTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <!-- Center spacer for FAB -->
+                <BoxView Grid.Column="2" Color="Transparent"/>
+
+                <!-- NOTIFICATIONS -->
+                <StackLayout Grid.Column="3"
+                             Spacing="3"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+                    <Label x:Name="NotifIcon"
+                           Text="🔔"
+                           FontSize="22"
+                           HorizontalOptions="Center"
+                           TextColor="#BBBBBB"/>
+                    <Ellipse x:Name="NotifDot"
+                             Fill="#4A90D9"
+                             WidthRequest="5"
+                             HeightRequest="5"
+                             HorizontalOptions="Center"
+                             IsVisible="False"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNotifTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <!-- PROFILE / MENU -->
+                <StackLayout Grid.Column="4"
+                             Spacing="3"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+                    <Label x:Name="ProfileIcon"
+                           Text="☰"
+                           FontSize="22"
+                           HorizontalOptions="Center"
+                           TextColor="#BBBBBB"/>
+                    <Ellipse x:Name="ProfileDot"
+                             Fill="#4A90D9"
+                             WidthRequest="5"
+                             HeightRequest="5"
+                             HorizontalOptions="Center"
+                             IsVisible="False"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnProfileTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+            </Grid>
+        </Border>
+
+        <!-- FAB — overlaps the bar from above -->
+        <Border WidthRequest="62"
+                HeightRequest="62"
+                BackgroundColor="#4A90D9"
+                Stroke="White"
+                StrokeThickness="3"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                Margin="0,0,0,0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="31"/>
+            </Border.StrokeShape>
+            <Border.Shadow>
+                <Shadow Brush="#4A90D9" Opacity="0.45" Radius="12" Offset="0,4"/>
+            </Border.Shadow>
+            <Label Text="+"
+                   FontSize="34"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="0,-3,0,0"/>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnFabTapped"/>
+            </Border.GestureRecognizers>
+        </Border>
+
+    </Grid>
+</ContentView>

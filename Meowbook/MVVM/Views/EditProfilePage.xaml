@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Meowbook.Views.EditProfilePage"
+             BackgroundColor="#F5F5F5"
+             Title="Edit Profile">
+             
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <Label Text="Public Information" FontSize="18" FontAttributes="Bold"/>
+            
+            <Frame Padding="15" CornerRadius="10" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="15">
+                    <VerticalStackLayout>
+                        <Label Text="Name" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <Entry x:Name="NameEntry" Placeholder="Your Name"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label Text="Username" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <Entry x:Name="UsernameEntry" Placeholder="Username" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label Text="Birthdate" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <DatePicker x:Name="BirthdatePicker" Format="yyyy-MM-dd" />
+                    </VerticalStackLayout>
+                    <Button Text="Save Changes" BackgroundColor="#1DA1F2" TextColor="White" Clicked="OnSaveClicked" Margin="0,15,0,0"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

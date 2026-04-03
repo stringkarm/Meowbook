@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Meowbook.Views"
+             x:Class="Meowbook.Views.MyProfilePage"
+             BackgroundColor="#F5F5F5"
+             Shell.NavBarIsVisible="False">
+             
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Grid.Row="0" Padding="16,14,16,10" BackgroundColor="White" ColumnDefinitions="*,Auto">
+            <Label Grid.Column="0" Text="Profile" FontSize="26" FontAttributes="Bold" TextColor="#1A1A2E" VerticalOptions="Center"/>
+            <ImageButton Grid.Column="1" Source="dotnet_bot.png" WidthRequest="30" HeightRequest="30" Clicked="OnSettingsClicked"/>
+        </Grid>
+        
+        <ScrollView Grid.Row="1">
+            <StackLayout Padding="20">
+                <Border WidthRequest="100" HeightRequest="100" StrokeThickness="0" HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="50"/>
+                    </Border.StrokeShape>
+                    <Image x:Name="ProfileImage" Aspect="AspectFill" BackgroundColor="LightGray" />
+                </Border>
+                <Label x:Name="NameLabel" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,10,0,0"/>
+                <Label x:Name="UsernameLabel" FontSize="14" TextColor="#888" HorizontalOptions="Center"/>
+            </StackLayout>
+        </ScrollView>
+
+        <views:BottomNavBar Grid.Row="2" ActiveTab="Profile"/>
+    </Grid>
+</ContentPage>

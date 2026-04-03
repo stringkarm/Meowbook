@@ -60,6 +60,7 @@
 	  <None Remove="Resources\Fonts\PoppinsBold.ttf" />
 	  <None Remove="Resources\Fonts\PoppinsMedium.ttf" />
 	  <None Remove="Resources\Fonts\PoppinsRegular.ttf" />
+	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\addfriend.png" />
 	  <None Remove="Resources\Images\bookmarkicon.png" />
 	  <None Remove="Resources\Images\commenticon.png" />
@@ -74,6 +75,7 @@
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\profileplaceholder.png" />
 	  <None Remove="Resources\Images\search.png" />
+	  <None Remove="Resources\Images\searchicon.png" />
 	  <None Remove="Resources\Images\shareicon.png" />
 	</ItemGroup>
 
@@ -100,13 +102,13 @@
 	  <MauiXaml Update="MVVM\Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="MVVM\Views\MainTabbedPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\MenuPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\RegistrationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\SearchPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\SplashPage.xaml">

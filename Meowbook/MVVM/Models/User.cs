@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace Meowbook.Models
@@ -31,6 +31,6 @@ namespace Meowbook.Models
 
         [ObservableProperty]
         [property: JsonPropertyName("friendsList")]
-        private string _friendsList; // Comma-separated IDs like "1,5,10"
+        private string _friendsList;
     }
 }

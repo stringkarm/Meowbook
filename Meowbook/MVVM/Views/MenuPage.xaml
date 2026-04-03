@@ -2,42 +2,33 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Meowbook.Views.MenuPage"
-             BackgroundColor="#F0F0F0"
-             Title="Menu">
+             Title="Menu"
+             BackgroundColor="#F5F5F5">
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="15">
-            <Frame BackgroundColor="White" Padding="15" CornerRadius="10" HasShadow="False">
+            <Frame Padding="15" CornerRadius="12" BackgroundColor="White" BorderColor="Transparent">
                 <HorizontalStackLayout Spacing="15">
-                    <Image Source="profile.png" HeightRequest="60" WidthRequest="60"/>
+                    <Frame Padding="0" HeightRequest="60" WidthRequest="60" CornerRadius="30" IsClippedToBounds="True">
+                        <Image x:Name="MenuProfileImage" Aspect="AspectFill"/>
+                    </Frame>
                     <VerticalStackLayout VerticalOptions="Center">
-                        <Label Text="Cat Parent Name" FontSize="20" FontAttributes="Bold" FontFamily="Poppins"/>
-                        <Label Text="See your profile" TextColor="Gray" FontFamily="Inter"/>
+                        <Label x:Name="MenuNameLabel" FontSize="18" FontAttributes="Bold"/>
+                        <Label Text="Welcome back!" TextColor="Gray" FontSize="14"/>
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
             </Frame>
 
-            <Label Text="Settings &amp; Privacy" FontAttributes="Bold" Margin="5,10,0,0" FontFamily="Poppins"/>
+            <Label Text="Quick Links" FontAttributes="Bold" FontSize="16" Margin="0,10,0,5"/>
 
-            <Frame BackgroundColor="White" Padding="0" CornerRadius="10" HasShadow="False">
-                <VerticalStackLayout>
-                    <Button Text="Settings" TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Start" FontFamily="Inter"/>
-                    <BoxView HeightRequest="1" Color="#F0F0F0"/>
-                    <Button Text="Help &amp; Support" TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Start" FontFamily="Inter"/>
-                    <BoxView HeightRequest="1" Color="#F0F0F0"/>
-                    <Button Text="Privacy Shortcuts" TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Start" FontFamily="Inter"/>
-                    <BoxView HeightRequest="1" Color="#F0F0F0"/>
-                    <Button Text="Terms of Service" TextColor="Black" BackgroundColor="Transparent" HorizontalOptions="Start" FontFamily="Inter"/>
-                </VerticalStackLayout>
-            </Frame>
+            <Button Text="My Profile (View)" Clicked="OnViewProfileClicked" BackgroundColor="White" TextColor="Black"/>
+            <Button Text="Edit Profile" Clicked="OnEditProfileClicked" BackgroundColor="White" TextColor="Black"/>
+            <Button Text="Settings &amp; Privacy" Clicked="OnSettingsClicked" BackgroundColor="White" TextColor="Black"/>
+            <Button Text="Help &amp; Support" BackgroundColor="White" TextColor="Black" Clicked="OnHelpClicked"/>
+            <Button Text="Terms of Service" BackgroundColor="White" TextColor="Black" Clicked="OnTermsClicked"/>
 
-            <Button Text="Log Out" 
-                    BackgroundColor="Black" 
-                    TextColor="Orange" 
-                    FontAttributes="Bold" 
-                    Margin="0,20,0,0"
-                    FontFamily="Poppins"
-                    Clicked="OnLogoutClicked"/>
+            <Button Text="Log Out" Command="{Binding LogoutCommand}" 
+                    BackgroundColor="#FF8C00" Margin="0,30,0,0" Clicked="OnLogoutClicked" TextColor="White"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

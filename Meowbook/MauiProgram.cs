@@ -22,26 +22,24 @@ namespace Meowbook
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // 1. Register Services
+            // ── Services ──────────────────────────────────────────────────
             builder.Services.AddSingleton<ApiService>();
 
-            // 2. Register ViewModels
+            // ── ViewModels ────────────────────────────────────────────────
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<RegistrationViewModel>();
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddTransient<PostViewModel>();
 
-            // 3. Register Views (Pages)
+            // ── Views / Pages ─────────────────────────────────────────────
             builder.Services.AddTransient<SplashPage>();
+            builder.Services.AddTransient<LandingPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<ForgotPassword>();
-            //builder.Services.AddTransient<ForgotPasswordViewModel>();
             builder.Services.AddTransient<RegistrationPage>();
-            builder.Services.AddTransient<RegistrationViewModel>(); ;
+            // HomePage gets HomeViewModel injected via constructor
             builder.Services.AddTransient<HomePage>();
-            builder.Services.AddTransient<HomeViewModel>();
-            builder.Services.AddTransient<MainTabbedPage>();
             builder.Services.AddTransient<MenuPage>();
-
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

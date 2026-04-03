@@ -10,11 +10,13 @@ public partial class SplashPage : ContentPage
 
     private async void RunSplashScreen()
     {
-        // Wait for 3 seconds
-        await Task.Delay(3000);
+        // Wait for 2.5 seconds
+        await Task.Delay(2500);
 
-        // Swap to AppShell
-        // This will automatically load the first page defined in AppShell.xaml
+        // Fade out before transitioning
+        await this.FadeTo(0, 400, Easing.CubicIn);
+
+        // Swap to AppShell – first page in AppShell.xaml (LandingPage) will fade in
         Application.Current.MainPage = new AppShell();
     }
-}
+}

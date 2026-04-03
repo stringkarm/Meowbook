@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Meowbook.Views"
+             x:Class="Meowbook.Views.NotificationsPage"
+             BackgroundColor="#F5F5F5"
+             Shell.NavBarIsVisible="False">
+             
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Grid.Row="0" Padding="16,14,16,10" BackgroundColor="White">
+            <Label Text="Notifications" FontSize="26" FontAttributes="Bold" TextColor="#1A1A2E" VerticalOptions="Center"/>
+        </Grid>
+        
+        <ScrollView Grid.Row="1">
+            <StackLayout Padding="0">
+                <StackLayout x:Name="EmptyState" Padding="20" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="True">
+                    <Label Text="No new notifications." TextColor="#888" HorizontalOptions="Center" />
+                </StackLayout>
+                
+                <CollectionView x:Name="NotificationsList" Margin="0,10,0,0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="10,5" Padding="15" CornerRadius="10" BackgroundColor="White" HasShadow="True" BorderColor="Transparent">
+                                <Label Text="{Binding}" FontSize="14" TextColor="#333" />
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+        <views:BottomNavBar Grid.Row="2" ActiveTab="Notifications"/>
+    </Grid>
+</ContentPage>

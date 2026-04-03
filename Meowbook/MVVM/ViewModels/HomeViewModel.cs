@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using Meowbook.Models;
@@ -21,26 +21,54 @@ namespace Meowbook.ViewModels
         [ObservableProperty]
         private User _currentUser;
 
-        // Using ObservableCollection for the feed
-        public ObservableCollection<Post> Posts { get; set; } = new();
+        // Full collections from API
+        private List<Post> _allPosts = new();
+        private List<User> _allUsers = new();
 
-        // ADDED: ObservableCollection for the Live Stories/Users header
-        public ObservableCollection<User> Users { get; set; } = new();
+        // Collections displayed in the UI
+        public ObservableCollection<Post> Posts { get; set; } = new();
+        public ObservableCollection<User> DisplayedUsers { get; set; } = new();
+
+        [ObservableProperty]
+        private string _searchText;
+
+        [ObservableProperty]
+        private bool _isSearching;
 
         public HomeViewModel(ApiService apiService)
         {
             _apiService = apiService;
-
-            // Initialize default values
             LoggedInUserProfileImage = "profileplaceholder.png";
-
-            // We initialize a dummy user if your Login logic hasn't passed one yet
-            // This prevents "Add Friend" from crashing/doing nothing.
             CurrentUser = new User { Id = "0", Name = "Meow User", FriendsList = "" };
+            _ = InitializeData();
+        }
 
-            // Initial load
-            _ = LoadPosts();
-            _ = LoadUsers(); // ADDED: Call the method to load users on startup
+        private async Task InitializeData()
+        {
+            // 1. ADD FAKE DATA TO TEST THE UI
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                // Fake Story
+                DisplayedUsers.Add(new User
+                {
+                    Name = "Test User",
+                    Avatar = "https://i.pravatar.cc/150?img=1"
+                });
+
+                // Fake Post
+                Posts.Add(new Post
+                {
+                    UserName = "Test Meow",
+                    UserAvatar = "https://i.pravatar.cc/150?img=2",
+                    ImageUrl = "https://picsum.photos/400/300",
+                    Content = "If you can see this, the XAML layout works perfectly!",
+                    Likes = 99
+                });
+            });
+
+            // 2. We will comment out the real API calls just for a moment
+            // await LoadPosts();
+            // await LoadAllUsers();
         }
 
         [RelayCommand]
@@ -48,24 +76,23 @@ namespace Meowbook.ViewModels
         {
             if (IsBusy) return;
             IsBusy = true;
-
             try
             {
-                var items = await _apiService.GetPostsAsync();
+                var posts = await _apiService.GetPostsAsync();
+                _allPosts = posts ?? new List<Post>();
 
-                // Always wrap collection updates in MainThread for UI stability
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     Posts.Clear();
-                    foreach (var item in items)
+                    foreach (var post in _allPosts)
                     {
-                        Posts.Add(item);
+                        Posts.Add(post);
                     }
                 });
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Fetch error: {ex.Message}");
+                Debug.WriteLine($"[HomeViewModel] Error loading posts: {ex.Message}");
             }
             finally
             {
@@ -73,23 +100,18 @@ namespace Meowbook.ViewModels
             }
         }
 
-        // ADDED: Method to load users from your MockAPI
-        [RelayCommand]
-        public async Task LoadUsers()
+        private async Task LoadAllUsers()
         {
             try
             {
-                var users = await _apiService.GetUsersAsync();
+                _allUsers = await _apiService.GetUsersAsync();
 
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    Users.Clear();
-                    if (users != null)
+                    DisplayedUsers.Clear();
+                    foreach (var user in _allUsers)
                     {
-                        foreach (var user in users)
-                        {
-                            Users.Add(user);
-                        }
+                        DisplayedUsers.Add(user);
                     }
                 });
             }
@@ -100,46 +122,50 @@ namespace Meowbook.ViewModels
         }
 
         [RelayCommand]
-        public async Task AddFriend(Post post)
+        public void PerformSearch()
         {
-            if (post == null || CurrentUser == null) return;
-
-            // 1. Prevent adding yourself
-            if (post.UserId == CurrentUser.Id)
+            if (string.IsNullOrWhiteSpace(SearchText))
             {
-                await Application.Current.MainPage.DisplayAlert("Oops", "You can't add yourself!", "OK");
+                LoadAllUsers();
+                IsSearching = false;
                 return;
             }
 
-            // 2. Check for existing friends
-            var currentFriends = CurrentUser.FriendsList ?? "";
-            var friendIds = currentFriends.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            IsSearching = true;
+            var filteredUsers = _allUsers.Where(u => u.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
 
-            if (friendIds.Contains(post.UserId))
+            MainThread.BeginInvokeOnMainThread(() =>
             {
-                await Application.Current.MainPage.DisplayAlert("Notice", $"{post.UserName} is already in your list!", "OK");
-                return;
-            }
-
-            // 3. Update the local string
-            if (string.IsNullOrWhiteSpace(currentFriends))
-                CurrentUser.FriendsList = post.UserId;
-            else
-                CurrentUser.FriendsList += $",{post.UserId}";
-
-            // 4. Push update to API
-            try
-            {
-                bool success = await _apiService.UpdateUserAsync(CurrentUser.Id, CurrentUser);
-                if (success)
+                DisplayedUsers.Clear();
+                foreach (var user in filteredUsers)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Meow!", $"Friend request sent to {post.UserName}!", "OK");
+                    DisplayedUsers.Add(user);
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"[HomeViewModel] AddFriend Error: {ex.Message}");
-            }
+            });
+        }
+
+        [RelayCommand]
+        public async Task ToggleSearch()
+        {
+            await Shell.Current.GoToAsync("//SearchPage");
+        }
+
+        [RelayCommand]
+        public async Task NavigateProfile()
+        {
+            await Shell.Current.GoToAsync("//ProfilePage");
+        }
+
+        [RelayCommand]
+        public async Task NavigateMenu()
+        {
+            await Shell.Current.GoToAsync("//MenuPage");
+        }
+
+        [RelayCommand]
+        public async Task NavigateAddPost()
+        {
+            await Shell.Current.GoToAsync("//AddPostPage");
         }
     }
 }

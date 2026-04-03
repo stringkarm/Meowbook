@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Meowbook.Views.SettingsPage"
+             BackgroundColor="#F5F5F5"
+             Title="Settings &amp; Privacy">
+             
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            
+            <Label Text="Account Security" FontSize="18" FontAttributes="Bold"/>
+            
+            <Frame Padding="15" CornerRadius="10" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="15">
+                    <VerticalStackLayout>
+                        <Label Text="New Password" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <Entry x:Name="PasswordEntry" IsPassword="True" Placeholder="Enter new password"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label Text="Confirm Password" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <Entry x:Name="ConfirmPasswordEntry" IsPassword="True" Placeholder="Confirm new password"/>
+                    </VerticalStackLayout>
+                    <Button Text="Update Password" BackgroundColor="#1DA1F2" TextColor="White" Clicked="OnChangePasswordClicked" Margin="0,10,0,0"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Account Actions" FontSize="18" FontAttributes="Bold" Margin="0,10,0,0"/>
+
+            <Button Text="Deactivate Account (Soft Delete)" BackgroundColor="#FFB347" TextColor="White" Clicked="OnDeactivateClicked"/>
+            <Button Text="Delete Account Permanently" BackgroundColor="#FF3B30" TextColor="White" Clicked="OnDeleteClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

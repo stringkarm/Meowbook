@@ -22,39 +22,46 @@
         </Grid>
     </Shell.TitleView>
 
-    <Grid RowDefinitions="*, Auto">
-        <RefreshView Grid.Row="0"
+
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        <Grid Grid.Row="0" Margin="10,0" ColumnDefinitions="*, Auto" IsVisible="{Binding IsSearching}">
+            <SearchBar Text="{Binding SearchText}" Placeholder="Search Meows..." SearchCommand="{Binding PerformSearchCommand}" Margin="0,0,10,0"/>
+            <Button Grid.Column="1" Text="X" Command="{Binding ToggleSearchCommand}" VerticalOptions="Center"/>
+        </Grid>
+
+        <RefreshView Grid.Row="1"
                      Command="{Binding LoadPostsCommand}"
                      IsRefreshing="{Binding IsBusy}"
                      RefreshColor="#FF8C00">
 
-            <CollectionView ItemsSource="{Binding Posts}"
+            <CollectionView ItemsSource="{Binding Posts}" 
                             VerticalOptions="FillAndExpand">
 
                 <CollectionView.Header>
                     <VerticalStackLayout Spacing="0" Padding="0,8,0,0">
                         <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="16,0">
-                            <HorizontalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Users}">
+                            <HorizontalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Posts}">
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="models:User">
-                                        <Grid HeightRequest="110" WidthRequest="160">
-                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 14">
-                                                <Image Source="{Binding Avatar}" Aspect="AspectFill" BackgroundColor="#CCCCCC"/>
+                                    <DataTemplate x:DataType="models:Post">
+                                        <Grid HeightRequest="160" WidthRequest="100">
+                                            <!-- Story Background Image -->
+                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 12">
+                                                <Image Source="{Binding ImageUrl}" Aspect="AspectFill" BackgroundColor="#CCCCCC"/>
                                             </Border>
 
-                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#66000000"/>
+                                            <!-- Gradient overlay for text readability -->
+                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="#44000000"/>
 
-                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 4" BackgroundColor="#FF8C00" Padding="6,2" 
-                                                    HorizontalOptions="Start" VerticalOptions="Start" Margin="8">
-                                                <Label Text="LIVE" TextColor="White" FontSize="9" FontAttributes="Bold"/>
-                                            </Border>
+                                            <!-- User Avatar Top Left -->
+                                            <Frame Padding="0" HeightRequest="36" WidthRequest="36" CornerRadius="18" 
+                                                   IsClippedToBounds="True" BorderColor="#1DA1F2" HorizontalOptions="Start" VerticalOptions="Start" Margin="8">
+                                                <Image Source="{Binding UserAvatar}" Aspect="AspectFill"/>
+                                            </Frame>
 
-                                            <HorizontalStackLayout VerticalOptions="End" Padding="8" Spacing="6">
-                                                <Frame Padding="0" HeightRequest="22" WidthRequest="22" CornerRadius="11" IsClippedToBounds="True" BorderColor="White">
-                                                    <Image Source="{Binding Avatar}" Aspect="AspectFill"/>
-                                                </Frame>
-                                                <Label Text="{Binding Name}" TextColor="White" FontSize="10" FontAttributes="Bold" VerticalOptions="Center"/>
-                                            </HorizontalStackLayout>
+                                            <!-- User Name Bottom -->
+                                            <Label Text="{Binding UserName}" TextColor="White" FontSize="11" FontAttributes="Bold" 
+                                                   VerticalOptions="End" HorizontalOptions="Start" Margin="8" LineBreakMode="TailTruncation"/>
                                         </Grid>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
@@ -77,10 +84,7 @@
                                     <Label Text="Traveler, Life Lover" FontSize="11" TextColor="#9E9E9E"/>
                                 </VerticalStackLayout>
 
-                                <ImageButton Grid.Column="2" 
-                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=AddFriendCommand}"
-                                             CommandParameter="{Binding .}"
-                                             Source="addfriend.png" HeightRequest="22" WidthRequest="22" BackgroundColor="Transparent" VerticalOptions="Center"/>
+                                <ImageButton Grid.Column="2" Source="addfriend.png" HeightRequest="22" WidthRequest="22" BackgroundColor="Transparent" VerticalOptions="Center"/>
                             </Grid>
 
                             <Grid Margin="16,0">
@@ -128,19 +132,34 @@
             </CollectionView>
         </RefreshView>
 
-        <Grid Grid.Row="1" HeightRequest="68" BackgroundColor="White" ColumnDefinitions="*, *, *, *, *">
+        <Grid Grid.Row="2" HeightRequest="68" BackgroundColor="White" ColumnDefinitions="*, *, *, *, *">
             <BoxView Grid.ColumnSpan="5" HeightRequest="1" VerticalOptions="Start" Color="#E8E8E8"/>
             <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
                 <Image Source="home.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center"/>
                 <Ellipse Fill="#FF8C00" HeightRequest="4" WidthRequest="4" HorizontalOptions="Center"/>
             </VerticalStackLayout>
-            <Image Grid.Column="1" Source="addfriend.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Image Grid.Column="1" Source="search_icon.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToggleSearchCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
             <Grid Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateAddPostCommand}" />
+                </Grid.GestureRecognizers>
                 <Ellipse Fill="#FF8C00" HeightRequest="52" WidthRequest="52"/>
                 <Label Text="+" TextColor="White" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TranslationY="-2"/>
             </Grid>
-            <Image Grid.Column="3" Source="hearticon.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
-            <Image Grid.Column="4" Source="menu.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"/>
+            <Image Grid.Column="3" Source="profile_icon.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateProfileCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="4" Source="menu.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateMenuCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
         </Grid>
     </Grid>
 </ContentPage>

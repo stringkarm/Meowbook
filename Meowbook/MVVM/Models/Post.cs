@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace Meowbook.Models
@@ -18,16 +18,16 @@ namespace Meowbook.Models
         private string _userName;
 
         [ObservableProperty]
-        [property: JsonPropertyName("userAvatar")] // Must match MockAPI exactly
+        [property: JsonPropertyName("userAvatar")]
         private string _userAvatar;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("imageUrl")]
+        private string _imageUrl;
 
         [ObservableProperty]
         [property: JsonPropertyName("content")]
         private string _content;
-
-        [ObservableProperty]
-        [property: JsonPropertyName("imageUrl")] // Must be lowercase 'i' to match MockAPI
-        private string _imageUrl;
 
         [ObservableProperty]
         [property: JsonPropertyName("likes")]

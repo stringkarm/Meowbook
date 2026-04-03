@@ -4,40 +4,47 @@ namespace Meowbook.Views;
 
 public partial class LandingPage : ContentPage
 {
-    // Option A: Standard constructor (Manual Binding)
     public LandingPage()
     {
         InitializeComponent();
-
-        // Bind the UI to the ViewModel so our Commands work
         BindingContext = new LandingViewModel();
     }
 
-    // Option B: Dependency Injection constructor 
-    // (Use this if you are registering your pages and ViewModels in MauiProgram.cs)
     public LandingPage(LandingViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        // Fade the page in from transparent
+        this.Opacity = 0;
+        await this.FadeTo(1, 500, Easing.CubicOut);
+    }
+
     private async void OnGetStartedClicked(object sender, EventArgs e)
     {
         try
         {
-            // Ensure Shell is actually ready before navigating
-            if (Shell.Current != null)
-            {
-                await Shell.Current.GoToAsync("LoginPage");
-            }
-            else
-            {
-                // Fallback if Shell isn't loaded yet
-                Application.Current.MainPage = new AppShell();
-            }
+            // Animate button press: scale down then up
+            var btn = (Button)sender;
+            await btn.ScaleTo(0.93, 80, Easing.CubicIn);
+            await btn.ScaleTo(1.0, 80, Easing.CubicOut);
+
+            // Fade the whole page out before navigating
+            await this.FadeTo(0, 300, Easing.CubicIn);
+
+            // Navigate using the absolute route (// prefix required for root ShellContent routes)
+            await Shell.Current.GoToAsync("//LoginPage");
+
+            // Reset opacity for when we come back
+            this.Opacity = 1;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
+            this.Opacity = 1;
             await DisplayAlert("Error", "Could not reach the login screen.", "OK");
         }
     }

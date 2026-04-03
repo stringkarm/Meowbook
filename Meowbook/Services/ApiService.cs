@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using System.Diagnostics;
 using Meowbook.Models;
 
@@ -7,11 +7,16 @@ namespace Meowbook.Services
     public class ApiService
     {
         private readonly HttpClient _httpClient;
+        // Updated to your current project URL from the screenshot
         private const string BaseUrl = "https://69c509418a5b6e2dec2bacca.mockapi.io/";
 
         public ApiService()
         {
-            _httpClient = new HttpClient { BaseAddress = new Uri(BaseUrl) };
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(BaseUrl),
+                Timeout = TimeSpan.FromSeconds(15)
+            };
         }
 
         #region User Operations
@@ -20,12 +25,28 @@ namespace Meowbook.Services
         {
             try
             {
+                // Returns all users to populate the "Stories" bar or friend lists
                 return await _httpClient.GetFromJsonAsync<List<User>>("users") ?? new List<User>();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error fetching users: {ex.Message}");
                 return new List<User>();
+            }
+        }
+
+        public async Task<User?> LoginAsync(string username, string password)
+        {
+            try
+            {
+                var users = await GetUsersAsync();
+                // Validates credentials against the data in MockAPI
+                return users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Login Error: {ex.Message}");
+                return null;
             }
         }
 
@@ -43,18 +64,30 @@ namespace Meowbook.Services
             }
         }
 
-        // --- NEW: Update User (Crucial for the Add Friend logic) ---
         public async Task<bool> UpdateUserAsync(string userId, User updatedUser)
         {
             try
             {
-                // This sends the updated friendsList back to MockAPI
                 var response = await _httpClient.PutAsJsonAsync($"users/{userId}", updatedUser);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error updating user: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteUserAsync(string userId)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"users/{userId}");
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting user: {ex.Message}");
                 return false;
             }
         }
@@ -67,12 +100,11 @@ namespace Meowbook.Services
         {
             try
             {
-                // Ensure the endpoint string matches your MockAPI resource name
                 return await _httpClient.GetFromJsonAsync<List<Post>>("posts") ?? new List<Post>();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error fetching posts: {ex.Message}");
+                Debug.WriteLine($"[ApiService] GetPostsAsync error: {ex.Message}");
                 return new List<Post>();
             }
         }
@@ -91,34 +123,22 @@ namespace Meowbook.Services
             }
         }
 
-        public async Task<bool> UpdatePostAsync(string id, Post updatedPost)
-        {
-            try
-            {
-                var response = await _httpClient.PutAsJsonAsync($"posts/{id}", updatedPost);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error updating post: {ex.Message}");
-                return false;
-            }
-        }
-
-        public async Task<bool> DeletePostAsync(string id)
-        {
-            try
-            {
-                var response = await _httpClient.DeleteAsync($"posts/{id}");
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error deleting post: {ex.Message}");
-                return false;
-            }
-        }
-
         #endregion
+
+        // Soft Delete (Deactivate) - Usually involves setting an "IsActive" flag to false
+        public async Task<bool> DeactivateUserAsync(string userId, User user)
+        {
+            // MockAPI doesn't have a 'soft delete' toggle, so we update a property
+            user.Bio = "DEACTIVATED_ACCOUNT";
+            var response = await _httpClient.PutAsJsonAsync($"users/{userId}", user);
+            return response.IsSuccessStatusCode;
+        }
+
+        // Hard Delete - Completely removes user from MockAPI
+        public async Task<bool> DeleteUserPermanentlyAsync(string userId)
+        {
+            var response = await _httpClient.DeleteAsync($"users/{userId}");
+            return response.IsSuccessStatusCode;
+        }
     }
 }
