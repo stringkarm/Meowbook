@@ -62,21 +62,28 @@
 	  <None Remove="Resources\Fonts\PoppinsRegular.ttf" />
 	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\addfriend.png" />
+	  <None Remove="Resources\Images\back.png" />
+	  <None Remove="Resources\Images\bg.png" />
 	  <None Remove="Resources\Images\bookmarkicon.png" />
 	  <None Remove="Resources\Images\commenticon.png" />
 	  <None Remove="Resources\Images\facebook.png" />
 	  <None Remove="Resources\Images\getstarted.png" />
 	  <None Remove="Resources\Images\hearticon.png" />
 	  <None Remove="Resources\Images\home.png" />
+	  <None Remove="Resources\Images\landingpagebg.png" />
+	  <None Remove="Resources\Images\loginpagebg.png" />
 	  <None Remove="Resources\Images\logo.jpg" />
 	  <None Remove="Resources\Images\logowhite.png" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\notifications.png" />
 	  <None Remove="Resources\Images\profile.png" />
+	  <None Remove="Resources\Images\profileicon.png" />
 	  <None Remove="Resources\Images\profileplaceholder.png" />
 	  <None Remove="Resources\Images\search.png" />
 	  <None Remove="Resources\Images\searchicon.png" />
+	  <None Remove="Resources\Images\seepassword.png" />
 	  <None Remove="Resources\Images\shareicon.png" />
+	  <None Remove="Resources\Images\threedots.png" />
 	</ItemGroup>
 
 	<ItemGroup>

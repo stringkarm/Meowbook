@@ -7,34 +7,32 @@
              x:DataType="vm:HomeViewModel"
              x:Class="Meowbook.Views.HomePage"
              Shell.TabBarIsVisible="False"
-             BackgroundColor="#F5F5F5">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
 
-    <Shell.TitleView>
-        <Grid ColumnDefinitions="*, Auto" Padding="16,0">
-            <HorizontalStackLayout VerticalOptions="Center" Spacing="6" >
-                <Image Source="logo.jpg" HeightRequest="28" WidthRequest="28" Aspect="AspectFit"/>
-                <Label Text="Meowbook" FontSize="28" FontAttributes="Bold" TextColor="White" VerticalOptions="Center"/>
-                <Ellipse Fill="#FFFFFF" HeightRequest="8" WidthRequest="8" VerticalOptions="Center" Margin="2,8,0,0"/>
-            </HorizontalStackLayout>
 
-            <Frame Grid.Column="1" Padding="0" HeightRequest="40" WidthRequest="40" CornerRadius="20" IsClippedToBounds="True" BorderColor="#FF8C00" VerticalOptions="Center">
+    <Grid RowDefinitions="Auto, Auto, *">
+        <!-- Custom Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="16,10" VerticalOptions="Center" BackgroundColor="White">
+            <Frame Grid.Column="0" Padding="0" HeightRequest="50" WidthRequest="50" CornerRadius="27.5" IsClippedToBounds="True" BorderColor="Transparent" VerticalOptions="Center" HasShadow="False">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigateProfileCommand}" />
                 </Frame.GestureRecognizers>
                 <Image Source="{Binding LoggedInUserProfileImage}" Aspect="AspectFill"/>
             </Frame>
+
+            <Label Grid.Column="1" Text="Meowbook" FontFamily="PoppinsBold" FontSize="22" FontAttributes="Bold" TextColor="#5A5A5A" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+            <Frame Grid.Column="2" Padding="0" HeightRequest="55" WidthRequest="55" CornerRadius="27.5" BackgroundColor="#F0F0F0" HasShadow="False" BorderColor="Transparent" VerticalOptions="Center">
+                <Image Source="notifications.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Frame>
         </Grid>
-    </Shell.TitleView>
-
-
-
-    <Grid RowDefinitions="Auto, *">
-        <Grid Grid.Row="0" Margin="10,0" ColumnDefinitions="*, Auto" IsVisible="{Binding IsSearching}">
+        <Grid Grid.Row="1" Margin="10,0" ColumnDefinitions="*, Auto" IsVisible="{Binding IsSearching}">
             <SearchBar Text="{Binding SearchText}" Placeholder="Search Meows..." SearchCommand="{Binding PerformSearchCommand}" Margin="0,0,10,0"/>
             <Button Grid.Column="1" Text="X" Command="{Binding ToggleSearchCommand}" VerticalOptions="Center"/>
         </Grid>
 
-        <RefreshView Grid.Row="1"
+        <RefreshView Grid.Row="2"
                      Command="{Binding LoadPostsCommand}"
                      IsRefreshing="{Binding IsBusy}"
                      RefreshColor="#FF8C00">
@@ -43,96 +41,99 @@
                             VerticalOptions="FillAndExpand">
 
                 <CollectionView.Header>
-                    <VerticalStackLayout Spacing="0" Padding="0,8,0,0">
-                        <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="16,0">
-                            <HorizontalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Posts}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="models:Post">
-                                        <Grid HeightRequest="160" WidthRequest="100">
-                                            <!-- Story Background Image -->
-                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 12">
-                                                <Image Source="{Binding ImageUrl}" Aspect="AspectFill" BackgroundColor="#CCCCCC"/>
-                                            </Border>
+                    <VerticalStackLayout Spacing="0" Padding="0,10,0,16">
+                        <!-- Horizontal Stories -->
+                        <CollectionView ItemsSource="{Binding Posts}" 
+                                        HeightRequest="170"
+                                        HorizontalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="13" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.Header>
+                                <BoxView WidthRequest="18" Color="Transparent"/>
+                            </CollectionView.Header>
+                            <CollectionView.Footer>
+                                <BoxView WidthRequest="16" Color="Transparent"/>
+                            </CollectionView.Footer>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Post">
+                                    <VerticalStackLayout Spacing="10" WidthRequest="160">
+                                        <Frame HeightRequest="110" WidthRequest="160" CornerRadius="24" Padding="0" HasShadow="False" IsClippedToBounds="True" BorderColor="Transparent" BackgroundColor="#E0E0E0">
+                                            <Image Source="{Binding ImageUrl}" Aspect="AspectFill" />
+                                        </Frame>
 
-                                            <!-- Gradient overlay for text readability -->
-                                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 12" BackgroundColor="#44000000"/>
-
-                                            <!-- User Avatar Top Left -->
-                                            <Frame Padding="0" HeightRequest="36" WidthRequest="36" CornerRadius="18" 
-                                                   IsClippedToBounds="True" BorderColor="#1DA1F2" HorizontalOptions="Start" VerticalOptions="Start" Margin="8">
-                                                <Frame.GestureRecognizers>
-                                                    <TapGestureRecognizer Tapped="OnUserAvatarTapped" />
-                                                </Frame.GestureRecognizers>
+                                        <HorizontalStackLayout Spacing="8" HorizontalOptions="Start">
+                                            <Frame Padding="0" HeightRequest="30" WidthRequest="30" CornerRadius="15" IsClippedToBounds="True" BorderColor="Transparent" HasShadow="False">
                                                 <Image Source="{Binding UserAvatar}" Aspect="AspectFill"/>
                                             </Frame>
-
-                                            <!-- User Name Bottom -->
-                                            <Label Text="{Binding UserName}" TextColor="White" FontSize="11" FontAttributes="Bold" 
-                                                   VerticalOptions="End" HorizontalOptions="Start" Margin="8" LineBreakMode="TailTruncation"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </HorizontalStackLayout>
-                        </ScrollView>
-                        <BoxView HeightRequest="14" Color="Transparent"/>
+                                            <Label Text="{Binding UserName}" TextColor="Black" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </VerticalStackLayout>
                 </CollectionView.Header>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Post">
-                        <VerticalStackLayout BackgroundColor="White" Margin="0,0,0,12" Spacing="0">
-                            <Grid ColumnDefinitions="Auto, *, Auto" Padding="16,14,16,10" ColumnSpacing="12">
-                                <Frame Padding="0" HeightRequest="44" WidthRequest="44" CornerRadius="22" IsClippedToBounds="True" BorderColor="#FF8C00">
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnUserAvatarTapped" />
-                                    </Frame.GestureRecognizers>
-                                    <Image Source="{Binding UserAvatar}" Aspect="AspectFill"/>
-                                </Frame>
+                        <Grid Padding="16,0,16,16">
+                            <Frame Padding="0" CornerRadius="24" HasShadow="False" IsClippedToBounds="True" HeightRequest="400" BackgroundColor="#EEEEEE" BorderColor="Transparent">
+                                <Grid>
+                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill" />
 
-                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                    <Label Text="{Binding UserName}" FontAttributes="Bold" FontSize="15" TextColor="#1C1C1C"/>
-                                    <Label Text="Traveler, Life Lover" FontSize="11" TextColor="#9E9E9E"/>
-                                </VerticalStackLayout>
+                                    <Frame Margin="16" Padding="8,6,12,6" CornerRadius="20" BackgroundColor="#60000000" HorizontalOptions="Start" VerticalOptions="Start" HasShadow="False" BorderColor="Transparent">
+                                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                                            <Frame HeightRequest="30" WidthRequest="30" CornerRadius="16" Padding="0" IsClippedToBounds="True" HasShadow="False" BorderColor="Transparent">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnUserAvatarTapped" />
+                                                </Frame.GestureRecognizers>
+                                                <Image Source="{Binding UserAvatar}" Aspect="AspectFit" />
+                                            </Frame>
+                                            <VerticalStackLayout VerticalOptions="Center" Spacing="0">
+                                                <VerticalStackLayout Spacing="4">
+                                                    <Label Text="{Binding UserName}" TextColor="White" FontSize="13" FontAttributes="Bold" />
+                                                    <Label Text="1 day ago" TextColor="White" FontSize="10" />
+                                                </VerticalStackLayout>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                    </Frame>
 
-                                <ImageButton Grid.Column="2" Source="addfriend.png" HeightRequest="22" WidthRequest="22" BackgroundColor="Transparent" VerticalOptions="Center"/>
-                            </Grid>
+                                    <Frame Margin="16" HeightRequest="40" WidthRequest="40" CornerRadius="20" BackgroundColor="#60000000" HorizontalOptions="End" VerticalOptions="Start" HasShadow="False" BorderColor="Transparent" Padding="0">
+                                        <Image Source="threedots.png" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Frame>
 
-                            <Grid Margin="16,0">
-                                <Border StrokeThickness="0" StrokeShape="RoundRectangle 16">
-                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill" HeightRequest="230" BackgroundColor="#EEEEEE"/>
-                                </Border>
-                                <Border StrokeThickness="0" StrokeShape="RoundRectangle 8" BackgroundColor="#DDFFFFFF" Padding="7,6" HorizontalOptions="End" VerticalOptions="Start" Margin="0,10,10,0">
-                                    <Image Source="bookmark_icon.png" HeightRequest="16" WidthRequest="16"/>
-                                </Border>
-                            </Grid>
+                                    <BoxView HeightRequest="100" VerticalOptions="End" BackgroundColor="Black" Opacity="0.4" />
 
-                            <Grid ColumnDefinitions="Auto, Auto, Auto, *" Padding="16,10,16,6" ColumnSpacing="16">
-                                <HorizontalStackLayout Spacing="5">
-                                    <Image Source="hearticon.png" HeightRequest="20" WidthRequest="20"/>
-                                    <Label Text="{Binding Likes}" FontAttributes="Bold" FontSize="13" TextColor="#1C1C1C" VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
+                                    <VerticalStackLayout VerticalOptions="End" Padding="16" Spacing="8">
+                                        <HorizontalStackLayout Spacing="16">
+                                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                                <Image Source="hearticon.png" HeightRequest="18" WidthRequest="18"/>
+                                                <Label Text="{Binding Likes}" TextColor="White" FontSize="12" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
 
-                                <HorizontalStackLayout Grid.Column="1" Spacing="5">
-                                    <Image Source="commenticon.png" HeightRequest="20" WidthRequest="20"/>
-                                    <Label Text="57" FontSize="13" TextColor="#9E9E9E" VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
+                                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                                <Image Source="commenticon.png" HeightRequest="18" WidthRequest="18"/>
+                                                <Label Text="173" TextColor="White" FontSize="12" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
 
-                                <HorizontalStackLayout Grid.Column="2" Spacing="5">
-                                    <Image Source="shareicon.png" HeightRequest="20" WidthRequest="20"/>
-                                    <Label Text="33" FontSize="13" TextColor="#9E9E9E" VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
-                            </Grid>
+                                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                                <Image Source="shareicon.png" HeightRequest="18" WidthRequest="18"/>
+                                                <Label Text="229" TextColor="White" FontSize="12" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+                                        </HorizontalStackLayout>
 
-                            <Label Margin="16,0,16,16" LineBreakMode="WordWrap" FontSize="13">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding UserName}" FontAttributes="Bold" TextColor="#1C1C1C"/>
-                                        <Span Text=" "/>
-                                        <Span Text="{Binding Content}" TextColor="#424242"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                        </VerticalStackLayout>
+                                        <Label LineBreakMode="WordWrap" FontSize="13">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Content}" TextColor="White" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
@@ -142,8 +143,7 @@
             </CollectionView>
         </RefreshView>
 
-        <!-- General Bottom Nav Bar -->
-        <views:BottomNavBar Grid.Row="1" ActiveTab="Home" VerticalOptions="End" />
+        <views:BottomNavBar Grid.Row="2" ActiveTab="Home" VerticalOptions="End" />
 
     </Grid>
 </ContentPage>

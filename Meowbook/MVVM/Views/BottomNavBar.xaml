@@ -4,10 +4,7 @@
              x:Class="Meowbook.Views.BottomNavBar"
              BackgroundColor="Transparent">
 
-    <!-- Outer Grid: bar + overlapping FAB -->
-    <Grid HeightRequest="100" BackgroundColor="Transparent"> <!-- Increased slightly to fit text and pill bottom margin -->
-
-        <!-- White pill bar at the bottom -->
+    <Grid HeightRequest="100" BackgroundColor="Transparent">
         <Border Margin="16,25,16,15"
                 BackgroundColor="White"
                 StrokeThickness="0"
@@ -19,43 +16,37 @@
                 <Shadow Brush="Black" Opacity="0.10" Radius="10" Offset="0,4"/>
             </Border.Shadow>
 
-            <!-- 5 columns: Home | Search | [FAB gap] | Profile | Menu -->
             <Grid ColumnDefinitions="*,*,68,*,*" Padding="0,5,0,5">
 
-                <!-- HOME -->
                 <StackLayout Grid.Column="0" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label x:Name="HomeIcon" Text="⌂" FontSize="24" HorizontalOptions="Center" TextColor="#BBBBBB"/>
-                    <Label x:Name="HomeText" Text="Home" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Image x:Name="HomeIcon" Source="home.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" Opacity="1.5"/>
+                    <Label x:Name="HomeText" Text="Home" FontSize="11" HorizontalOptions="Center" TextColor="Gray" FontFamily="InterRegular"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnHomeTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
 
-                <!-- SEARCH -->
                 <StackLayout Grid.Column="1" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label x:Name="SearchIcon" Text="🔍" FontSize="20" HorizontalOptions="Center" TextColor="#BBBBBB"/>
-                    <Label x:Name="SearchText" Text="Search" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Image x:Name="SearchIcon" Source="searchicon.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" Opacity="1.5"/>
+                    <Label x:Name="SearchText" Text="Search" FontSize="11" HorizontalOptions="Center" TextColor="Gray"  FontFamily="InterRegular"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnSearchTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
 
-                <!-- Center spacer for FAB -->
                 <BoxView Grid.Column="2" Color="Transparent"/>
 
-                <!-- PROFILE -->
                 <StackLayout Grid.Column="3" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label x:Name="ProfileIcon" Text="👤" FontSize="20" HorizontalOptions="Center" TextColor="#BBBBBB"/>
-                    <Label x:Name="ProfileText" Text="Profile" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Image x:Name="ProfileIcon" Source="profileicon.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" Opacity="1.5"/>
+                    <Label x:Name="ProfileText" Text="Profile" FontFamily="InterRegular" FontSize="11" HorizontalOptions="Center" TextColor="Gray"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnProfileTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
 
-                <!-- MENU -->
                 <StackLayout Grid.Column="4" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label x:Name="MenuIcon" Text="☰" FontSize="24" HorizontalOptions="Center" TextColor="#BBBBBB"/>
-                    <Label x:Name="MenuText" Text="Menu" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Image x:Name="MenuIcon" Source="menu.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" Opacity="1.5"/>
+                    <Label x:Name="MenuText" Text="Menu" FontSize="11" HorizontalOptions="Center" TextColor="Gray" FontFamily="InterRegular"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnMenuTapped"/>
                     </StackLayout.GestureRecognizers>
@@ -64,32 +55,17 @@
             </Grid>
         </Border>
 
-        <!-- FAB — overlaps the bar from above -->
-        <Border WidthRequest="62"
-                HeightRequest="62"
-                BackgroundColor="#A64BFF"
-                Stroke="White"
-                StrokeThickness="4"
-                HorizontalOptions="Center"
-                VerticalOptions="Start"
-                Margin="0,0,0,0">
+        <Border WidthRequest="62" HeightRequest="62" BackgroundColor="DarkOrange" Stroke="White" StrokeThickness="4" HorizontalOptions="Center" VerticalOptions="Start">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="31"/>
             </Border.StrokeShape>
             <Border.Shadow>
-                <Shadow Brush="#A64BFF" Opacity="0.4" Radius="10" Offset="0,4"/>
+                <Shadow Brush="Orange" Opacity="0.4" Radius="10" Offset="0,4"/>
             </Border.Shadow>
-            <Label Text="+"
-                   FontSize="34"
-                   FontAttributes="Bold"
-                   TextColor="White"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="0,-3,0,0"/>
+            <Label Text="+" FontSize="34" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,-3,0,0"/>
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnFabTapped"/>
             </Border.GestureRecognizers>
         </Border>
-
     </Grid>
 </ContentView>

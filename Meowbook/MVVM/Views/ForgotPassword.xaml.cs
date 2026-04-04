@@ -1,5 +1,5 @@
-using Meowbook.Models;
 using Meowbook.Services;
+using System.Linq;
 
 namespace Meowbook.Views;
 
@@ -15,17 +15,24 @@ public partial class ForgotPassword : ContentPage
 
     private async void OnUpdatePasswordClicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(EmailEntry.Text) || string.IsNullOrWhiteSpace(NewPasswordEntry.Text))
+        if (string.IsNullOrWhiteSpace(EmailEntry.Text) ||
+            string.IsNullOrWhiteSpace(NewPasswordEntry.Text) ||
+            string.IsNullOrWhiteSpace(ConfirmPasswordEntry.Text))
         {
             await DisplayAlert("Error", "All fields are required", "OK");
             return;
         }
 
+        if (NewPasswordEntry.Text != ConfirmPasswordEntry.Text)
+        {
+            await DisplayAlert("Error", "Passwords do not match", "OK");
+            return;
+        }
+
         try
         {
-            // Fetch users from MockAPI
             var users = await _apiService.GetUsersAsync();
-            var user = users.FirstOrDefault(u => 
+            var user = users.FirstOrDefault(u =>
                 (u.Email != null && u.Email.Equals(EmailEntry.Text, StringComparison.OrdinalIgnoreCase)) ||
                 (u.Username != null && u.Username.Equals(EmailEntry.Text, StringComparison.OrdinalIgnoreCase)));
 
@@ -33,15 +40,10 @@ public partial class ForgotPassword : ContentPage
             {
                 user.Password = NewPasswordEntry.Text;
                 bool success = await _apiService.UpdateUserAsync(user.Id, user);
-
                 if (success)
                 {
                     await DisplayAlert("Success", "Password updated successfully!", "OK");
-                    await Application.Current.MainPage.Navigation.PopAsync();
-                }
-                else
-                {
-                    await DisplayAlert("Error", "Failed to update password across MockAPI", "OK");
+                    await Navigation.PopAsync();
                 }
             }
             else
@@ -55,11 +57,22 @@ public partial class ForgotPassword : ContentPage
         }
     }
 
-    private void OnToggleForgotPasswordClicked(object sender, EventArgs e)
+    private void OnToggleNewPasswordClicked(object sender, EventArgs e)
     {
-        if (NewPasswordEntry != null)
-        {
-            NewPasswordEntry.IsPassword = !NewPasswordEntry.IsPassword;
-        }
+        NewPasswordEntry.IsPassword = !NewPasswordEntry.IsPassword;
+        ToggleNewPasswordBtn.Rotation = NewPasswordEntry.IsPassword ? 0 : 180;
+        ToggleNewPasswordBtn.Opacity = NewPasswordEntry.IsPassword ? 1.0 : 0.6;
+    }
+
+    private void OnToggleConfirmPasswordClicked(object sender, EventArgs e)
+    {
+        ConfirmPasswordEntry.IsPassword = !ConfirmPasswordEntry.IsPassword;
+        ToggleConfirmPasswordBtn.Rotation = ConfirmPasswordEntry.IsPassword ? 0 : 180;
+        ToggleConfirmPasswordBtn.Opacity = ConfirmPasswordEntry.IsPassword ? 1.0 : 0.6;
+    }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 }

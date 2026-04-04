@@ -34,35 +34,44 @@ namespace Meowbook.Views
 
         private void UpdateActiveState(string activeTab)
         {
-            // Reset all to grey
+            // Reset all to inactive state (0.5 Opacity for icons, Grey for text)
             var grey = Color.FromArgb("#BBBBBB");
-            HomeIcon.TextColor    = grey;
-            HomeText.TextColor    = grey;
-            SearchIcon.TextColor  = grey;
-            SearchText.TextColor  = grey;
-            ProfileIcon.TextColor = grey;
-            ProfileText.TextColor = grey;
-            MenuIcon.TextColor    = grey;
-            MenuText.TextColor    = grey;
 
-            // Highlight active
+            // Home
+            HomeIcon.Opacity = 0.5;
+            HomeText.TextColor = grey;
+
+            // Search
+            SearchIcon.Opacity = 0.5;
+            SearchText.TextColor = grey;
+
+            // Profile
+            ProfileIcon.Opacity = 0.5;
+            ProfileText.TextColor = grey;
+
+            // Menu
+            MenuIcon.Opacity = 0.5;
+            MenuText.TextColor = grey;
+
+            // Highlight the active tab (1.0 Opacity and Purple text)
             var activeColor = Color.FromArgb("#A64BFF");
+
             switch (activeTab)
             {
                 case "Home":
-                    HomeIcon.TextColor  = activeColor;
-                    HomeText.TextColor  = activeColor;
+                    HomeIcon.Opacity = 1.0;
+                    HomeText.TextColor = activeColor;
                     break;
                 case "Search":
-                    SearchIcon.TextColor = activeColor;
+                    SearchIcon.Opacity = 1.0;
                     SearchText.TextColor = activeColor;
                     break;
                 case "Profile":
-                    ProfileIcon.TextColor = activeColor;
+                    ProfileIcon.Opacity = 1.0;
                     ProfileText.TextColor = activeColor;
                     break;
                 case "Menu":
-                    MenuIcon.TextColor = activeColor;
+                    MenuIcon.Opacity = 1.0;
                     MenuText.TextColor = activeColor;
                     break;
             }
@@ -106,7 +115,7 @@ namespace Meowbook.Views
         private static async Task AnimateIcon(View icon)
         {
             await icon.ScaleTo(0.80, 70, Easing.CubicIn);
-            await icon.ScaleTo(1.0,  80, Easing.CubicOut);
+            await icon.ScaleTo(1.0, 80, Easing.CubicOut);
         }
     }
 }

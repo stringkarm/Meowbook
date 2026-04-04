@@ -10,7 +10,7 @@ public partial class RegistrationPage : ContentPage
         BindingContext = viewModel;
     }
 
-    private async void OnLoginClicked(object sender, EventArgs e)
+    private async void OnBackClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }

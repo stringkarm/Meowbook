@@ -32,9 +32,22 @@ public partial class LoginPage : ContentPage
 
     private void OnToggleLoginPasswordClicked(object sender, EventArgs e)
     {
-        if (LoginPasswordEntry != null)
+        if (LoginPasswordEntry != null && PasswordVisibilityButton != null)
         {
+            // 1. Toggle the password visibility
             LoginPasswordEntry.IsPassword = !LoginPasswordEntry.IsPassword;
+
+            // 2. Adjust Opacity based on visibility
+            if (LoginPasswordEntry.IsPassword)
+            {
+                // PASSWORD IS UNSEEN (Hidden) -> Set Opacity to 100%
+                PasswordVisibilityButton.Opacity = 1.0;
+            }
+            else
+            {
+                // PASSWORD IS SEEN (Visible) -> Set Opacity to 50% (or 0.5)
+                PasswordVisibilityButton.Opacity = 0.5;
+            }
         }
     }
-}
+}
