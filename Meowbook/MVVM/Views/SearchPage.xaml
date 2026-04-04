@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Meowbook.ViewModels"
              xmlns:models="clr-namespace:Meowbook.Models"
-             x:Class="Meowbook.MVVM.Views.SearchPage"
+             xmlns:views="clr-namespace:Meowbook.Views"
+             x:Class="Meowbook.Views.SearchPage"
              x:DataType="vm:SearchViewModel"
              Title="Search Users"
+             Shell.TabBarIsVisible="False"
              BackgroundColor="#F5F5F5">
 
     <Grid RowDefinitions="Auto, *">
@@ -34,5 +36,9 @@
         </CollectionView>
 
         <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+        <!-- General Bottom Nav Bar -->
+        <views:BottomNavBar Grid.Row="1" ActiveTab="Search" VerticalOptions="End" />
+
     </Grid>
 </ContentPage>

@@ -32,5 +32,13 @@ namespace Meowbook.Models
         [ObservableProperty]
         [property: JsonPropertyName("likes")]
         private int _likes;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("comments")]
+        private int _comments;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("shares")]
+        private int _shares;
     }
 }

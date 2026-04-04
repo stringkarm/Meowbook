@@ -1,3 +1,5 @@
+using Meowbook.Services;
+
 namespace Meowbook.Views;
 
 public partial class MenuPage : ContentPage
@@ -49,6 +51,6 @@ public partial class MenuPage : ContentPage
     {
         GlobalState.CurrentUser = null;
         GlobalState.CurrentUserId = string.Empty;
-        Application.Current.MainPage = new NavigationPage(new LoginPage());
+        Application.Current.MainPage = new SplashPage();
     }
 }

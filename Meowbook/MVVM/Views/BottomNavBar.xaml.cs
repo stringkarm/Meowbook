@@ -35,34 +35,35 @@ namespace Meowbook.Views
         private void UpdateActiveState(string activeTab)
         {
             // Reset all to grey
-            HomeIcon.TextColor    = Color.FromArgb("#BBBBBB");
-            FriendsIcon.TextColor = Color.FromArgb("#BBBBBB");
-            NotifIcon.TextColor   = Color.FromArgb("#BBBBBB");
-            ProfileIcon.TextColor = Color.FromArgb("#BBBBBB");
-            HomeDot.IsVisible     = false;
-            FriendsDot.IsVisible  = false;
-            NotifDot.IsVisible    = false;
-            ProfileDot.IsVisible  = false;
+            var grey = Color.FromArgb("#BBBBBB");
+            HomeIcon.TextColor    = grey;
+            HomeText.TextColor    = grey;
+            SearchIcon.TextColor  = grey;
+            SearchText.TextColor  = grey;
+            ProfileIcon.TextColor = grey;
+            ProfileText.TextColor = grey;
+            MenuIcon.TextColor    = grey;
+            MenuText.TextColor    = grey;
 
             // Highlight active
-            var blue = Color.FromArgb("#4A90D9");
+            var activeColor = Color.FromArgb("#A64BFF");
             switch (activeTab)
             {
                 case "Home":
-                    HomeIcon.TextColor  = blue;
-                    HomeDot.IsVisible   = true;
+                    HomeIcon.TextColor  = activeColor;
+                    HomeText.TextColor  = activeColor;
                     break;
-                case "Friends":
-                    FriendsIcon.TextColor = blue;
-                    FriendsDot.IsVisible  = true;
-                    break;
-                case "Notifications":
-                    NotifIcon.TextColor = blue;
-                    NotifDot.IsVisible  = true;
+                case "Search":
+                    SearchIcon.TextColor = activeColor;
+                    SearchText.TextColor = activeColor;
                     break;
                 case "Profile":
-                    ProfileIcon.TextColor = blue;
-                    ProfileDot.IsVisible  = true;
+                    ProfileIcon.TextColor = activeColor;
+                    ProfileText.TextColor = activeColor;
+                    break;
+                case "Menu":
+                    MenuIcon.TextColor = activeColor;
+                    MenuText.TextColor = activeColor;
                     break;
             }
         }
@@ -71,25 +72,25 @@ namespace Meowbook.Views
         private async void OnHomeTapped(object sender, TappedEventArgs e)
         {
             await AnimateIcon(HomeIcon);
-            await Shell.Current.GoToAsync("//HomePage");
+            await Shell.Current.GoToAsync("///HomePage");
         }
 
-        private async void OnFriendsTapped(object sender, TappedEventArgs e)
+        private async void OnSearchTapped(object sender, TappedEventArgs e)
         {
-            await AnimateIcon(FriendsIcon);
-            await Shell.Current.GoToAsync("//MessagesPage");
-        }
-
-        private async void OnNotifTapped(object sender, TappedEventArgs e)
-        {
-            await AnimateIcon(NotifIcon);
-            await Shell.Current.GoToAsync("//NotificationsPage");
+            await AnimateIcon(SearchIcon);
+            await Shell.Current.GoToAsync("///SearchPage");
         }
 
         private async void OnProfileTapped(object sender, TappedEventArgs e)
         {
             await AnimateIcon(ProfileIcon);
-            await Shell.Current.GoToAsync("//MyProfilePage");
+            await Shell.Current.GoToAsync("///MyProfilePage");
+        }
+
+        private async void OnMenuTapped(object sender, TappedEventArgs e)
+        {
+            await AnimateIcon(MenuIcon);
+            await Shell.Current.GoToAsync("///MenuPage");
         }
 
         private async void OnFabTapped(object sender, TappedEventArgs e)
@@ -98,7 +99,7 @@ namespace Meowbook.Views
             var fab = (View)sender;
             await fab.ScaleTo(0.88, 80, Easing.CubicIn);
             await fab.ScaleTo(1.0, 100, Easing.SpringOut);
-            await Shell.Current.GoToAsync("AddPostPage");
+            await Shell.Current.GoToAsync("///AddPostPage");
         }
 
         // ── Micro-animation helper ────────────────────────────────────────

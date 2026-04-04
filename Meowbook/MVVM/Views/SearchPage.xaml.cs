@@ -1,7 +1,7 @@
 using Microsoft.Maui.Controls;
 using Meowbook.ViewModels;
 
-namespace Meowbook.MVVM.Views
+namespace Meowbook.Views
 {
     public partial class SearchPage : ContentPage
     {

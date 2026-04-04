@@ -8,6 +8,7 @@ public partial class LoginPage : ContentPage
     public LoginPage()
     {
         InitializeComponent();
+        BindingContext = new LoginViewModel(new Meowbook.Services.ApiService());
     }
 
     // Constructor for Dependency Injection (set up in MauiProgram.cs)

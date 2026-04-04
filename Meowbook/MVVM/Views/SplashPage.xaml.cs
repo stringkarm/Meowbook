@@ -16,7 +16,7 @@ public partial class SplashPage : ContentPage
         // Fade out before transitioning
         await this.FadeTo(0, 400, Easing.CubicIn);
 
-        // Swap to AppShell – first page in AppShell.xaml (LandingPage) will fade in
-        Application.Current.MainPage = new AppShell();
+        // Swap to LandingPage manually inside a NavigationPage
+        Application.Current.MainPage = new NavigationPage(new LandingPage());
     }
 }

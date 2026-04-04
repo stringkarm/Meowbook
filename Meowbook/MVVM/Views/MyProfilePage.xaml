@@ -4,9 +4,10 @@
              xmlns:views="clr-namespace:Meowbook.Views"
              x:Class="Meowbook.Views.MyProfilePage"
              BackgroundColor="#F5F5F5"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
              
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*">
         <Grid Grid.Row="0" Padding="16,14,16,10" BackgroundColor="White" ColumnDefinitions="*,Auto">
             <Label Grid.Column="0" Text="Profile" FontSize="26" FontAttributes="Bold" TextColor="#1A1A2E" VerticalOptions="Center"/>
             <ImageButton Grid.Column="1" Source="dotnet_bot.png" WidthRequest="30" HeightRequest="30" Clicked="OnSettingsClicked"/>
@@ -25,6 +26,6 @@
             </StackLayout>
         </ScrollView>
 
-        <views:BottomNavBar Grid.Row="2" ActiveTab="Profile"/>
+        <views:BottomNavBar Grid.Row="1" ActiveTab="Profile" VerticalOptions="End"/>
     </Grid>
 </ContentPage>

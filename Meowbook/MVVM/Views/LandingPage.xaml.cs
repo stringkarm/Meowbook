@@ -36,8 +36,8 @@ public partial class LandingPage : ContentPage
             // Fade the whole page out before navigating
             await this.FadeTo(0, 300, Easing.CubicIn);
 
-            // Navigate using the absolute route (// prefix required for root ShellContent routes)
-            await Shell.Current.GoToAsync("//LoginPage");
+            // Navigate normally because we are inside a NavigationPage, not Shell
+            await Navigation.PushAsync(new LoginPage());
 
             // Reset opacity for when we come back
             this.Opacity = 1;

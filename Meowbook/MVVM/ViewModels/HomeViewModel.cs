@@ -45,30 +45,14 @@ namespace Meowbook.ViewModels
 
         private async Task InitializeData()
         {
-            // 1. ADD FAKE DATA TO TEST THE UI
-            MainThread.BeginInvokeOnMainThread(() =>
+            if (GlobalState.CurrentUser != null)
             {
-                // Fake Story
-                DisplayedUsers.Add(new User
-                {
-                    Name = "Test User",
-                    Avatar = "https://i.pravatar.cc/150?img=1"
-                });
+                CurrentUser = GlobalState.CurrentUser;
+                LoggedInUserProfileImage = string.IsNullOrEmpty(CurrentUser.Avatar) ? "profileplaceholder.png" : CurrentUser.Avatar;
+            }
 
-                // Fake Post
-                Posts.Add(new Post
-                {
-                    UserName = "Test Meow",
-                    UserAvatar = "https://i.pravatar.cc/150?img=2",
-                    ImageUrl = "https://picsum.photos/400/300",
-                    Content = "If you can see this, the XAML layout works perfectly!",
-                    Likes = 99
-                });
-            });
-
-            // 2. We will comment out the real API calls just for a moment
-            // await LoadPosts();
-            // await LoadAllUsers();
+            await LoadPosts();
+            await LoadAllUsers();
         }
 
         [RelayCommand]
@@ -153,7 +137,7 @@ namespace Meowbook.ViewModels
         [RelayCommand]
         public async Task NavigateProfile()
         {
-            await Shell.Current.GoToAsync("//ProfilePage");
+            await Shell.Current.GoToAsync("//MyProfilePage");
         }
 
         [RelayCommand]

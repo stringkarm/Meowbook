@@ -51,7 +51,7 @@ namespace Meowbook.ViewModels
                     GlobalState.CurrentUserId = user.Id;
                     GlobalState.CurrentUser = user;
 
-                    await Shell.Current.GoToAsync("//HomePage");
+                    Application.Current.MainPage = new AppShell();
                 }
                 else
                 {
@@ -71,13 +71,13 @@ namespace Meowbook.ViewModels
         [RelayCommand]
         private async Task GoToRegister()
         {
-            await Shell.Current.GoToAsync("RegistrationPage");
+            await Application.Current.MainPage.Navigation.PushAsync(new Meowbook.Views.RegistrationPage(this));
         }
 
         [RelayCommand]
         private async Task ForgotPassword()
         {
-            await Shell.Current.GoToAsync("ForgotPassword");
+            await Application.Current.MainPage.Navigation.PushAsync(new Meowbook.Views.ForgotPassword());
         }
     }
 }

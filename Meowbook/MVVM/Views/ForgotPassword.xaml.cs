@@ -1,15 +1,17 @@
-using System.Text;
-using System.Text.Json;
 using Meowbook.Models;
+using Meowbook.Services;
 
 namespace Meowbook.Views;
 
 public partial class ForgotPassword : ContentPage
 {
-    private readonly HttpClient _client = new HttpClient();
-    private const string ApiUrl = "https://69c509418a5b6e2dec2baccb.mockapi.io/";
+    private readonly ApiService _apiService;
 
-    public ForgotPassword() => InitializeComponent();
+    public ForgotPassword()
+    {
+        InitializeComponent();
+        _apiService = new ApiService();
+    }
 
     private async void OnUpdatePasswordClicked(object sender, EventArgs e)
     {
@@ -21,24 +23,25 @@ public partial class ForgotPassword : ContentPage
 
         try
         {
-            // 1. Fetch user by email
-            var response = await _client.GetStringAsync($"{ApiUrl}?email={EmailEntry.Text}");
-            var users = JsonSerializer.Deserialize<List<User>>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            // Fetch users from MockAPI
+            var users = await _apiService.GetUsersAsync();
+            var user = users.FirstOrDefault(u => 
+                (u.Email != null && u.Email.Equals(EmailEntry.Text, StringComparison.OrdinalIgnoreCase)) ||
+                (u.Username != null && u.Username.Equals(EmailEntry.Text, StringComparison.OrdinalIgnoreCase)));
 
-            if (users?.Count > 0)
+            if (user != null)
             {
-                var user = users[0];
                 user.Password = NewPasswordEntry.Text;
+                bool success = await _apiService.UpdateUserAsync(user.Id, user);
 
-                // 2. Update MockAPI data
-                var json = JsonSerializer.Serialize(user);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var updateResult = await _client.PutAsync($"{ApiUrl}/{user.Id}", content);
-
-                if (updateResult.IsSuccessStatusCode)
+                if (success)
                 {
-                    await DisplayAlert("Success", "Password updated!", "OK");
-                    await Shell.Current.GoToAsync("..");
+                    await DisplayAlert("Success", "Password updated successfully!", "OK");
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
+                else
+                {
+                    await DisplayAlert("Error", "Failed to update password across MockAPI", "OK");
                 }
             }
             else

@@ -5,104 +5,59 @@
              BackgroundColor="Transparent">
 
     <!-- Outer Grid: bar + overlapping FAB -->
-    <Grid HeightRequest="80">
+    <Grid HeightRequest="100" BackgroundColor="Transparent"> <!-- Increased slightly to fit text and pill bottom margin -->
 
-        <!-- White bar at the bottom -->
-        <Border Margin="0,20,0,0"
+        <!-- White pill bar at the bottom -->
+        <Border Margin="16,25,16,15"
                 BackgroundColor="White"
                 StrokeThickness="0"
                 VerticalOptions="Fill">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="30"/>
+            </Border.StrokeShape>
             <Border.Shadow>
-                <Shadow Brush="Black" Opacity="0.10" Radius="16" Offset="0,-3"/>
+                <Shadow Brush="Black" Opacity="0.10" Radius="10" Offset="0,4"/>
             </Border.Shadow>
 
-            <!-- 5 columns: Home | Friends | [FAB gap] | Notifications | Profile -->
-            <Grid ColumnDefinitions="*,*,68,*,*" Padding="0,10,0,0">
+            <!-- 5 columns: Home | Search | [FAB gap] | Profile | Menu -->
+            <Grid ColumnDefinitions="*,*,68,*,*" Padding="0,5,0,5">
 
                 <!-- HOME -->
-                <StackLayout Grid.Column="0"
-                             Spacing="3"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center">
-                    <Label x:Name="HomeIcon"
-                           Text="⌂"
-                           FontSize="24"
-                           HorizontalOptions="Center"
-                           TextColor="#BBBBBB"/>
-                    <Ellipse x:Name="HomeDot"
-                             Fill="#4A90D9"
-                             WidthRequest="5"
-                             HeightRequest="5"
-                             HorizontalOptions="Center"
-                             IsVisible="False"/>
+                <StackLayout Grid.Column="0" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label x:Name="HomeIcon" Text="⌂" FontSize="24" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Label x:Name="HomeText" Text="Home" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnHomeTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
 
-                <!-- FRIENDS / ADD FRIEND -->
-                <StackLayout Grid.Column="1"
-                             Spacing="3"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center">
-                    <Label x:Name="FriendsIcon"
-                           Text="👥"
-                           FontSize="22"
-                           HorizontalOptions="Center"
-                           TextColor="#BBBBBB"/>
-                    <Ellipse x:Name="FriendsDot"
-                             Fill="#4A90D9"
-                             WidthRequest="5"
-                             HeightRequest="5"
-                             HorizontalOptions="Center"
-                             IsVisible="False"/>
+                <!-- SEARCH -->
+                <StackLayout Grid.Column="1" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label x:Name="SearchIcon" Text="🔍" FontSize="20" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Label x:Name="SearchText" Text="Search" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnFriendsTapped"/>
+                        <TapGestureRecognizer Tapped="OnSearchTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
 
                 <!-- Center spacer for FAB -->
                 <BoxView Grid.Column="2" Color="Transparent"/>
 
-                <!-- NOTIFICATIONS -->
-                <StackLayout Grid.Column="3"
-                             Spacing="3"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center">
-                    <Label x:Name="NotifIcon"
-                           Text="🔔"
-                           FontSize="22"
-                           HorizontalOptions="Center"
-                           TextColor="#BBBBBB"/>
-                    <Ellipse x:Name="NotifDot"
-                             Fill="#4A90D9"
-                             WidthRequest="5"
-                             HeightRequest="5"
-                             HorizontalOptions="Center"
-                             IsVisible="False"/>
+                <!-- PROFILE -->
+                <StackLayout Grid.Column="3" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label x:Name="ProfileIcon" Text="👤" FontSize="20" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Label x:Name="ProfileText" Text="Profile" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnNotifTapped"/>
+                        <TapGestureRecognizer Tapped="OnProfileTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
 
-                <!-- PROFILE / MENU -->
-                <StackLayout Grid.Column="4"
-                             Spacing="3"
-                             HorizontalOptions="Center"
-                             VerticalOptions="Center">
-                    <Label x:Name="ProfileIcon"
-                           Text="☰"
-                           FontSize="22"
-                           HorizontalOptions="Center"
-                           TextColor="#BBBBBB"/>
-                    <Ellipse x:Name="ProfileDot"
-                             Fill="#4A90D9"
-                             WidthRequest="5"
-                             HeightRequest="5"
-                             HorizontalOptions="Center"
-                             IsVisible="False"/>
+                <!-- MENU -->
+                <StackLayout Grid.Column="4" Spacing="2" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label x:Name="MenuIcon" Text="☰" FontSize="24" HorizontalOptions="Center" TextColor="#BBBBBB"/>
+                    <Label x:Name="MenuText" Text="Menu" FontSize="11" HorizontalOptions="Center" TextColor="#BBBBBB"/>
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnProfileTapped"/>
+                        <TapGestureRecognizer Tapped="OnMenuTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
 
@@ -112,9 +67,9 @@
         <!-- FAB — overlaps the bar from above -->
         <Border WidthRequest="62"
                 HeightRequest="62"
-                BackgroundColor="#4A90D9"
+                BackgroundColor="#A64BFF"
                 Stroke="White"
-                StrokeThickness="3"
+                StrokeThickness="4"
                 HorizontalOptions="Center"
                 VerticalOptions="Start"
                 Margin="0,0,0,0">
@@ -122,7 +77,7 @@
                 <RoundRectangle CornerRadius="31"/>
             </Border.StrokeShape>
             <Border.Shadow>
-                <Shadow Brush="#4A90D9" Opacity="0.45" Radius="12" Offset="0,4"/>
+                <Shadow Brush="#A64BFF" Opacity="0.4" Radius="10" Offset="0,4"/>
             </Border.Shadow>
             <Label Text="+"
                    FontSize="34"

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Meowbook.ViewModels"
              xmlns:models="clr-namespace:Meowbook.Models"
+             xmlns:views="clr-namespace:Meowbook.Views"
              x:DataType="vm:HomeViewModel"
              x:Class="Meowbook.Views.HomePage"
              Shell.TabBarIsVisible="False"
@@ -24,7 +25,7 @@
 
 
 
-    <Grid RowDefinitions="Auto, *, Auto">
+    <Grid RowDefinitions="Auto, *">
         <Grid Grid.Row="0" Margin="10,0" ColumnDefinitions="*, Auto" IsVisible="{Binding IsSearching}">
             <SearchBar Text="{Binding SearchText}" Placeholder="Search Meows..." SearchCommand="{Binding PerformSearchCommand}" Margin="0,0,10,0"/>
             <Button Grid.Column="1" Text="X" Command="{Binding ToggleSearchCommand}" VerticalOptions="Center"/>
@@ -132,34 +133,8 @@
             </CollectionView>
         </RefreshView>
 
-        <Grid Grid.Row="2" HeightRequest="68" BackgroundColor="White" ColumnDefinitions="*, *, *, *, *">
-            <BoxView Grid.ColumnSpan="5" HeightRequest="1" VerticalOptions="Start" Color="#E8E8E8"/>
-            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" Spacing="4">
-                <Image Source="home.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center"/>
-                <Ellipse Fill="#FF8C00" HeightRequest="4" WidthRequest="4" HorizontalOptions="Center"/>
-            </VerticalStackLayout>
-            <Image Grid.Column="1" Source="search_icon.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToggleSearchCommand}"/>
-                </Image.GestureRecognizers>
-            </Image>
-            <Grid Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateAddPostCommand}" />
-                </Grid.GestureRecognizers>
-                <Ellipse Fill="#FF8C00" HeightRequest="52" WidthRequest="52"/>
-                <Label Text="+" TextColor="White" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TranslationY="-2"/>
-            </Grid>
-            <Image Grid.Column="3" Source="profile_icon.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateProfileCommand}" />
-                </Image.GestureRecognizers>
-            </Image>
-            <Image Grid.Column="4" Source="menu.png" HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateMenuCommand}" />
-                </Image.GestureRecognizers>
-            </Image>
-        </Grid>
+        <!-- General Bottom Nav Bar -->
+        <views:BottomNavBar Grid.Row="1" ActiveTab="Home" VerticalOptions="End" />
+
     </Grid>
 </ContentPage>

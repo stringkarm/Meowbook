@@ -61,7 +61,7 @@ namespace Meowbook.Views
                 
                 GlobalState.CurrentUser = null;
                 GlobalState.CurrentUserId = string.Empty;
-                await Shell.Current.GoToAsync("//SplashPage");
+                Application.Current.MainPage = new SplashPage();
             }
         }
 
@@ -76,7 +76,7 @@ namespace Meowbook.Views
                     await DisplayAlert("Deleted", "Account deleted from system.", "OK");
                     GlobalState.CurrentUser = null;
                     GlobalState.CurrentUserId = string.Empty;
-                    await Shell.Current.GoToAsync("//SplashPage");
+                    Application.Current.MainPage = new SplashPage();
                 }
                 else
                 {

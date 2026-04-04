@@ -13,8 +13,8 @@
         </Grid>
         
         <VerticalStackLayout Grid.Row="1" Spacing="15" Margin="0,20,0,0">
-            <Editor x:Name="ContentEditor" Placeholder="What's happening?" AutoSize="TextChanges" FontSize="18" HeightRequest="150"/>
-            <Entry x:Name="ImageUrlEntry" Placeholder="Image URL (Optional)" />
+            <Editor x:Name="ContentEditor" Placeholder="What's happening?" PlaceholderColor="Gray" TextColor="Black" AutoSize="TextChanges" FontSize="18" HeightRequest="150"/>
+            <Entry x:Name="ImageUrlEntry" Placeholder="Image URL (Optional)" PlaceholderColor="Gray" TextColor="Black" />
             <Border StrokeThickness="0" HeightRequest="200" IsVisible="false" x:Name="ImagePreviewContainer">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="12"/>

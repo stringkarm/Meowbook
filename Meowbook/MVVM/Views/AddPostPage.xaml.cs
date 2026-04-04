@@ -41,7 +41,9 @@ namespace Meowbook.Views
 
         private async void OnCancelClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("..");
+            ContentEditor.Text = string.Empty;
+            ImageUrlEntry.Text = string.Empty;
+            await Shell.Current.GoToAsync("///HomePage");
         }
 
         private async void OnPostClicked(object sender, EventArgs e)
@@ -76,9 +78,11 @@ namespace Meowbook.Views
 
             if (success)
             {
+                ContentEditor.Text = string.Empty;
+                ImageUrlEntry.Text = string.Empty;
                 // Fade out before going back
                 await this.FadeTo(0, 250, Easing.CubicIn);
-                await Shell.Current.GoToAsync("..");
+                await Shell.Current.GoToAsync("///HomePage");
                 this.Opacity = 1;
             }
             else

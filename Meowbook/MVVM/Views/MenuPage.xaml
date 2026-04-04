@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Meowbook.Views"
              x:Class="Meowbook.Views.MenuPage"
              Title="Menu"
+             Shell.TabBarIsVisible="False"
              BackgroundColor="#F5F5F5">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            <Frame Padding="15" CornerRadius="12" BackgroundColor="White" BorderColor="Transparent">
-                <HorizontalStackLayout Spacing="15">
-                    <Frame Padding="0" HeightRequest="60" WidthRequest="60" CornerRadius="30" IsClippedToBounds="True">
-                        <Image x:Name="MenuProfileImage" Aspect="AspectFill"/>
-                    </Frame>
-                    <VerticalStackLayout VerticalOptions="Center">
-                        <Label x:Name="MenuNameLabel" FontSize="18" FontAttributes="Bold"/>
-                        <Label Text="Welcome back!" TextColor="Gray" FontSize="14"/>
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
-            </Frame>
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Frame Padding="15" CornerRadius="12" BackgroundColor="White" BorderColor="Transparent">
+                    <HorizontalStackLayout Spacing="15">
+                        <Frame Padding="0" HeightRequest="60" WidthRequest="60" CornerRadius="30" IsClippedToBounds="True">
+                            <Image x:Name="MenuProfileImage" Aspect="AspectFill"/>
+                        </Frame>
+                        <VerticalStackLayout VerticalOptions="Center">
+                            <Label x:Name="MenuNameLabel" FontSize="18" FontAttributes="Bold"/>
+                            <Label Text="Welcome back!" TextColor="Gray" FontSize="14"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
 
-            <Label Text="Quick Links" FontAttributes="Bold" FontSize="16" Margin="0,10,0,5"/>
+                <Label Text="Quick Links" FontAttributes="Bold" FontSize="16" Margin="0,10,0,5"/>
 
-            <Button Text="My Profile (View)" Clicked="OnViewProfileClicked" BackgroundColor="White" TextColor="Black"/>
-            <Button Text="Edit Profile" Clicked="OnEditProfileClicked" BackgroundColor="White" TextColor="Black"/>
-            <Button Text="Settings &amp; Privacy" Clicked="OnSettingsClicked" BackgroundColor="White" TextColor="Black"/>
-            <Button Text="Help &amp; Support" BackgroundColor="White" TextColor="Black" Clicked="OnHelpClicked"/>
-            <Button Text="Terms of Service" BackgroundColor="White" TextColor="Black" Clicked="OnTermsClicked"/>
+                <Button Text="My Profile (View)" Clicked="OnViewProfileClicked" BackgroundColor="White" TextColor="Black"/>
+                <Button Text="Edit Profile" Clicked="OnEditProfileClicked" BackgroundColor="White" TextColor="Black"/>
+                <Button Text="Settings &amp; Privacy" Clicked="OnSettingsClicked" BackgroundColor="White" TextColor="Black"/>
+                <Button Text="Help &amp; Support" BackgroundColor="White" TextColor="Black" Clicked="OnHelpClicked"/>
+                <Button Text="Terms of Service" BackgroundColor="White" TextColor="Black" Clicked="OnTermsClicked"/>
 
-            <Button Text="Log Out" Command="{Binding LogoutCommand}" 
-                    BackgroundColor="#FF8C00" Margin="0,30,0,0" Clicked="OnLogoutClicked" TextColor="White"/>
-        </VerticalStackLayout>
-    </ScrollView>
+                <Button Text="Log Out" Command="{Binding LogoutCommand}" 
+                        BackgroundColor="#FF8C00" Margin="0,30,0,0" Clicked="OnLogoutClicked" TextColor="White"/>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- General Bottom Nav Bar -->
+        <views:BottomNavBar ActiveTab="Menu" VerticalOptions="End" />
+    </Grid>
 </ContentPage>

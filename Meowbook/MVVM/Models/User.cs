@@ -32,5 +32,17 @@ namespace Meowbook.Models
         [ObservableProperty]
         [property: JsonPropertyName("friendsList")]
         private string _friendsList;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("birthdate")]
+        private string _birthdate;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("notifications")]
+        private string _notifications;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("isActive")]
+        private bool _isActive;
     }
 }
