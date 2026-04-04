@@ -57,7 +57,7 @@
                         <Label Text="Account Actions" FontFamily="PoppinsBold" FontSize="18" TextColor="Black"/>
                         
                         <VerticalStackLayout Spacing="12">
-                            <Button Text="Deactivate Account (Soft Delete)" FontFamily="PoppinsBold" FontSize="14" BackgroundColor="#FFAB40" TextColor="White" CornerRadius="20" HeightRequest="50" Clicked="OnDeactivateClicked"/>
+                            <Button Text="Deactivate Account" FontFamily="PoppinsBold" FontSize="14" BackgroundColor="#FFAB40" TextColor="White" CornerRadius="20" HeightRequest="50" Clicked="OnDeactivateClicked"/>
                             <Button Text="Delete Account Permanently" FontFamily="PoppinsBold" FontSize="14" BackgroundColor="#FF3B30" TextColor="White" CornerRadius="20" HeightRequest="50" Clicked="OnDeleteClicked"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>

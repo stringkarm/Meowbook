@@ -100,6 +100,7 @@
                 <Label Text="Don't have an account? " TextColor="White" VerticalOptions="Center" />
                 <Label Text="Sign Up" 
                        TextColor="White" 
+                       FontFamily="InterRegular"
                        FontAttributes="Bold" 
                        VerticalOptions="Center"
                        Padding="10,10">

@@ -66,7 +66,7 @@
                                             <Frame Padding="0" HeightRequest="30" WidthRequest="30" CornerRadius="15" IsClippedToBounds="True" BorderColor="Transparent" HasShadow="False">
                                                 <Image Source="{Binding UserAvatar}" Aspect="AspectFill"/>
                                             </Frame>
-                                            <Label Text="{Binding UserName}" TextColor="Black" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                            <Label Text="{Binding UserName}" FontFamily="InterRegular" TextColor="Black" FontSize="13" FontAttributes="Bold" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1"/>
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
                                 </DataTemplate>
@@ -92,8 +92,8 @@
                                             </Frame>
                                             <VerticalStackLayout VerticalOptions="Center" Spacing="0">
                                                 <VerticalStackLayout Spacing="4">
-                                                    <Label Text="{Binding UserName}" TextColor="White" FontSize="13" FontAttributes="Bold" />
-                                                    <Label Text="1 day ago" TextColor="White" FontSize="10" />
+                                                    <Label Text="{Binding UserName}" TextColor="White" FontSize="13" FontAttributes="Bold" FontFamily="InterRegular"/>
+                                                    <Label Text="1 day ago" TextColor="White" FontSize="10" FontFamily="InterRegular"/>
                                                 </VerticalStackLayout>
                                             </VerticalStackLayout>
                                         </HorizontalStackLayout>
@@ -109,24 +109,24 @@
                                         <HorizontalStackLayout Spacing="16">
                                             <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                                                 <Image Source="hearticon.png" HeightRequest="18" WidthRequest="18"/>
-                                                <Label Text="{Binding Likes}" TextColor="White" FontSize="12" VerticalOptions="Center"/>
+                                                <Label Text="{Binding Likes}" TextColor="White" FontSize="12" VerticalOptions="Center" FontFamily="InterRegular"/>
                                             </HorizontalStackLayout>
 
                                             <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                                                 <Image Source="commenticon.png" HeightRequest="18" WidthRequest="18"/>
-                                                <Label Text="173" TextColor="White" FontSize="12" VerticalOptions="Center"/>
+                                                <Label Text="173" TextColor="White" FontSize="12" VerticalOptions="Center" FontFamily="InterRegular"/>
                                             </HorizontalStackLayout>
 
                                             <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
                                                 <Image Source="shareicon.png" HeightRequest="18" WidthRequest="18"/>
-                                                <Label Text="229" TextColor="White" FontSize="12" VerticalOptions="Center"/>
+                                                <Label Text="229" TextColor="White" FontSize="12" VerticalOptions="Center" FontFamily="InterRegular"/>
                                             </HorizontalStackLayout>
                                         </HorizontalStackLayout>
 
                                         <Label LineBreakMode="WordWrap" FontSize="13">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="{Binding Content}" TextColor="White" />
+                                                    <Span Text="{Binding Content}" TextColor="White" FontFamily="InterRegular" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
