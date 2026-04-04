@@ -7,25 +7,63 @@
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False">
              
-    <Grid RowDefinitions="Auto,*">
-        <Grid Grid.Row="0" Padding="16,14,16,10" BackgroundColor="White" ColumnDefinitions="*,Auto">
-            <Label Grid.Column="0" Text="Profile" FontSize="26" FontAttributes="Bold" TextColor="#1A1A2E" VerticalOptions="Center"/>
-            <ImageButton Grid.Column="1" Source="dotnet_bot.png" WidthRequest="30" HeightRequest="30" Clicked="OnSettingsClicked"/>
-        </Grid>
-        
-        <ScrollView Grid.Row="1">
-            <StackLayout Padding="20">
-                <Border WidthRequest="100" HeightRequest="100" StrokeThickness="0" HorizontalOptions="Center">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="50"/>
-                    </Border.StrokeShape>
-                    <Image x:Name="ProfileImage" Aspect="AspectFill" BackgroundColor="LightGray" />
-                </Border>
-                <Label x:Name="NameLabel" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,10,0,0"/>
-                <Label x:Name="UsernameLabel" FontSize="14" TextColor="#888" HorizontalOptions="Center"/>
-            </StackLayout>
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="340, Auto, *">
+                
+                <!-- COVER PHOTO (Avatar) -->
+                <Image x:Name="ProfileCoverImage" Grid.Row="0" Aspect="AspectFill" BackgroundColor="LightGray"/>
+
+                <!-- Top actions -->
+                <Grid Grid.Row="0" VerticalOptions="Start" Padding="20,50,20,0" ColumnDefinitions="Auto, *, Auto">
+                    <!-- Nav handled by BottomNav, but keeping aesthetics -->
+                    <ImageButton Grid.Column="2" Source="dotnet_bot.png" WidthRequest="30" HeightRequest="30" BackgroundColor="Transparent" Clicked="OnSettingsClicked"/>
+                </Grid>
+
+                <!-- PROFILE CARD OVERLAY -->
+                <Frame Grid.Row="1" Margin="20,-80,20,0" CornerRadius="15" Padding="25" BackgroundColor="White" HasShadow="True" BorderColor="Transparent">
+                    <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto">
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" VerticalOptions="Center">
+                            <Label x:Name="NameLabel" FontSize="20" FontAttributes="Bold" TextColor="#1C1C1C" FontFamily="PoppinsBold"/>
+                            <Label x:Name="UsernameLabel" FontSize="14" TextColor="Gray" FontFamily="InterRegular"/>
+                            <Label Text="📍 Member of Meowbook" FontSize="12" TextColor="Gray" Margin="0,10,0,0" FontFamily="InterRegular"/>
+                        </VerticalStackLayout>
+                        
+                        <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="15" VerticalOptions="Center">
+                            <ImageButton Source="dotnet_bot.png" WidthRequest="45" HeightRequest="45" CornerRadius="22" BackgroundColor="#E6E0F8" Clicked="OnSettingsClicked" ToolTipProperties.Text="Edit Profile"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- ABOUT ME & PORTFOLIO -->
+                <VerticalStackLayout Grid.Row="2" Padding="25, 25, 25, 40" Spacing="15">
+                    <Label Text="About me" FontSize="18" FontAttributes="Bold" TextColor="#1C1C1C" FontFamily="PoppinsBold"/>
+                    <Label x:Name="BioLabel" FontSize="14" TextColor="Gray" LineHeight="1.5" FontFamily="InterRegular" Margin="0,0,0,10"/>
+
+                    <Label Text="Portfolio Insights" FontSize="18" FontAttributes="Bold" TextColor="#1C1C1C" FontFamily="PoppinsBold" Margin="0,10,0,10"/>
+                    
+                    <CollectionView x:Name="PostsCollectionView">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="15" HorizontalItemSpacing="15" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.EmptyView>
+                            <StackLayout Padding="30" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="No posts yet" TextColor="Gray" FontSize="16" HorizontalTextAlignment="Center" FontFamily="InterRegular"/>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame CornerRadius="15" Padding="0" IsClippedToBounds="True" HeightRequest="160" BorderColor="Transparent" HasShadow="False" BackgroundColor="#EAEAEA">
+                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill" />
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Grid>
         </ScrollView>
 
-        <views:BottomNavBar Grid.Row="1" ActiveTab="Profile" VerticalOptions="End"/>
+        <!-- Bottom Nav Bar Frame Component -->
+        <views:BottomNavBar Grid.Row="1" ActiveTab="Profile" BackgroundColor="Transparent"/>
     </Grid>
 </ContentPage>

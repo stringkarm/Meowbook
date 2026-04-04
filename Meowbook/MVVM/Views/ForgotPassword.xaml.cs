@@ -54,4 +54,12 @@ public partial class ForgotPassword : ContentPage
             await DisplayAlert("Error", "API connection failed", "OK");
         }
     }
+
+    private void OnToggleForgotPasswordClicked(object sender, EventArgs e)
+    {
+        if (NewPasswordEntry != null)
+        {
+            NewPasswordEntry.IsPassword = !NewPasswordEntry.IsPassword;
+        }
+    }
 }

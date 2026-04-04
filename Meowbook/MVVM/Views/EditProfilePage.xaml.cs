@@ -23,6 +23,8 @@ namespace Meowbook.Views
             {
                 NameEntry.Text = GlobalState.CurrentUser.Name;
                 UsernameEntry.Text = GlobalState.CurrentUser.Username;
+                AvatarEntry.Text = GlobalState.CurrentUser.Avatar;
+                BioEditor.Text = GlobalState.CurrentUser.Bio;
                 if (DateTime.TryParse(GlobalState.CurrentUser.Birthdate, out DateTime parsedDate))
                 {
                     BirthdatePicker.Date = parsedDate;
@@ -41,6 +43,8 @@ namespace Meowbook.Views
             GlobalState.CurrentUser.Name = NameEntry.Text;
             GlobalState.CurrentUser.Username = UsernameEntry.Text;
             GlobalState.CurrentUser.Birthdate = BirthdatePicker.Date.ToString("yyyy-MM-dd");
+            GlobalState.CurrentUser.Avatar = AvatarEntry.Text;
+            GlobalState.CurrentUser.Bio = BioEditor.Text;
 
             bool success = await _apiService.UpdateUserAsync(GlobalState.CurrentUser.Id, GlobalState.CurrentUser);
             if (success)

@@ -59,11 +59,11 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
-                        <Entry Text="{Binding Password}" 
-                               Placeholder="Password" 
-                               IsPassword="True" 
+                        <Entry Text="{Binding Email}" 
+                               Placeholder="Email Address" 
                                HeightRequest="55" 
                                TextColor="Black"
+                               Keyboard="Email"
                                FontFamily="InterRegular" />
                     </Border>
 
@@ -71,11 +71,28 @@
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="12" />
                         </Border.StrokeShape>
-                        <Editor Text="{Binding Bio}"
-                                Placeholder="Tell us about your cats..." 
-                                HeightRequest="100"
-                                TextColor="Black"
-                                FontFamily="InterRegular" />
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Entry x:Name="RegPasswordEntry"
+                                   Text="{Binding Password}" 
+                                   Placeholder="Password" 
+                                   IsPassword="True" 
+                                   HeightRequest="55" 
+                                   TextColor="Black"
+                                   FontFamily="InterRegular" />
+                            <Button Grid.Column="1" Text="👁" TextColor="Gray" BackgroundColor="Transparent" FontSize="20" Margin="0,0,10,0"
+                                         VerticalOptions="Center" Clicked="OnToggleRegPasswordClicked" />
+                        </Grid>
+                    </Border>
+
+                    <Border Stroke="#FF8C00">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Entry Text="{Binding Birthdate}"
+                               Placeholder="Birthdate (MM/DD/YYYY)" 
+                               HeightRequest="55"
+                               TextColor="Black"
+                               FontFamily="InterRegular" />
                     </Border>
 
                     <Button Text="Register Now" 

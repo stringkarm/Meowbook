@@ -36,11 +36,16 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12" />
                             </Border.StrokeShape>
-                            <Entry Placeholder="Password" 
-                                   Text="{Binding Password}" 
-                                   IsPassword="True" 
-                                   HeightRequest="55" 
-                                   TextColor="Black"/>
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Entry x:Name="LoginPasswordEntry"
+                                       Placeholder="Password" 
+                                       Text="{Binding Password}" 
+                                       IsPassword="True" 
+                                       HeightRequest="55" 
+                                       TextColor="Black"/>
+                                <Button Grid.Column="1" Text="👁" TextColor="Gray" BackgroundColor="Transparent" FontSize="20" Margin="0,0,10,0"
+                                        VerticalOptions="Center" Clicked="OnToggleLoginPasswordClicked" />
+                            </Grid>
                         </Border>
 
                         <Label Text="Forgot password?" TextColor="#FF8C00" HorizontalOptions="End" FontFamily="PoppinsMedium">

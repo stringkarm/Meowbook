@@ -4,8 +4,7 @@ namespace Meowbook.Views;
 
 public partial class RegistrationPage : ContentPage
 {
-    // Using the same ViewModel or a dedicated RegistrationViewModel
-    public RegistrationPage(LoginViewModel viewModel)
+    public RegistrationPage(RegistrationViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
@@ -14,5 +13,13 @@ public partial class RegistrationPage : ContentPage
     private async void OnLoginClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
+    }
+
+    private void OnToggleRegPasswordClicked(object sender, EventArgs e)
+    {
+        if (RegPasswordEntry != null)
+        {
+            RegPasswordEntry.IsPassword = !RegPasswordEntry.IsPassword;
+        }
     }
 }

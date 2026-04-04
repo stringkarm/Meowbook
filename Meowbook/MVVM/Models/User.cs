@@ -44,5 +44,9 @@ namespace Meowbook.Models
         [ObservableProperty]
         [property: JsonPropertyName("isActive")]
         private bool _isActive;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("email")]
+        private string _email;
     }
 }

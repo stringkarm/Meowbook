@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Meowbook.Services;
 using Meowbook.Models;
@@ -13,8 +13,9 @@ namespace Meowbook.ViewModels
         [ObservableProperty] private string _username;
         [ObservableProperty] private string _password;
 
-        // Added this to bind with the Editor in your XAML
-        [ObservableProperty] private string _bio;
+        [ObservableProperty] private string _email;
+
+        [ObservableProperty] private string _birthdate;
 
         [ObservableProperty] private bool _isBusy;
 
@@ -26,10 +27,10 @@ namespace Meowbook.ViewModels
         [RelayCommand]
         private async Task Register()
         {
-            // Validation updated to ensure we have the core requirements
-            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+            // Validation updated to ensure we have the core requirements including Email
+            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(Birthdate))
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "Please fill in Name, Username, and Password", "OK");
+                await Application.Current.MainPage.DisplayAlert("Validation Error", "Please fill in all the required fields.", "OK");
                 return;
             }
 
@@ -40,9 +41,10 @@ namespace Meowbook.ViewModels
                 {
                     Name = Name,
                     Username = Username,
+                    Email = Email,
                     Password = Password,
-                    // If Bio is empty, provide a fun default
-                    Bio = string.IsNullOrWhiteSpace(Bio) ? "New cat parent on Meowbook!" : Bio,
+                    Birthdate = Birthdate,
+                    Bio = "New cat parent on Meowbook!",
                     Avatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                     FriendsList = ""
                 };
@@ -52,7 +54,7 @@ namespace Meowbook.ViewModels
                 if (success)
                 {
                     await Application.Current.MainPage.DisplayAlert("Success", "Account created! Please login.", "OK");
-                    await Shell.Current.GoToAsync("..");
+                    await Application.Current.MainPage.Navigation.PopAsync();
                 }
                 else
                 {
@@ -72,7 +74,7 @@ namespace Meowbook.ViewModels
         [RelayCommand]
         private async Task GoToLogin()
         {
-            await Shell.Current.GoToAsync("..");
+            await Application.Current.MainPage.Navigation.PopAsync();
         }
     }
 }

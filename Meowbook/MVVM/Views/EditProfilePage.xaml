@@ -24,6 +24,14 @@
                         <Label Text="Birthdate" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
                         <DatePicker x:Name="BirthdatePicker" Format="yyyy-MM-dd" />
                     </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label Text="Avatar URL" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <Entry x:Name="AvatarEntry" Placeholder="Profile Image URL" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label Text="About Me (Bio)" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <Editor x:Name="BioEditor" Placeholder="Tell us about yourself..." HeightRequest="100"/>
+                    </VerticalStackLayout>
                     <Button Text="Save Changes" BackgroundColor="#1DA1F2" TextColor="White" Clicked="OnSaveClicked" Margin="0,15,0,0"/>
                 </VerticalStackLayout>
             </Frame>

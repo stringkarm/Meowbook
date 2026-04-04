@@ -71,7 +71,7 @@ namespace Meowbook.ViewModels
         [RelayCommand]
         private async Task GoToRegister()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new Meowbook.Views.RegistrationPage(this));
+            await Application.Current.MainPage.Navigation.PushAsync(new Meowbook.Views.RegistrationPage(new RegistrationViewModel(_apiService)));
         }
 
         [RelayCommand]

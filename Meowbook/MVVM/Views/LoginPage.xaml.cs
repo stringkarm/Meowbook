@@ -29,4 +29,12 @@ public partial class LoginPage : ContentPage
             this.TranslateTo(0, 0, 400, Easing.CubicOut)
         );
     }
+
+    private void OnToggleLoginPasswordClicked(object sender, EventArgs e)
+    {
+        if (LoginPasswordEntry != null)
+        {
+            LoginPasswordEntry.IsPassword = !LoginPasswordEntry.IsPassword;
+        }
+    }
 }
