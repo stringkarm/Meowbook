@@ -13,9 +13,15 @@
         </Grid>
         
         <VerticalStackLayout Grid.Row="1" Spacing="15" Margin="0,20,0,0">
-            <Editor x:Name="ContentEditor" Placeholder="What's happening?" PlaceholderColor="Gray" TextColor="Black" AutoSize="TextChanges" FontSize="18" HeightRequest="150"/>
-            <Entry x:Name="ImageUrlEntry" Placeholder="Image URL (Optional)" PlaceholderColor="Gray" TextColor="Black" />
-            <Border StrokeThickness="0" HeightRequest="200" IsVisible="false" x:Name="ImagePreviewContainer">
+            <Editor x:Name="ContentEditor" Placeholder="What's happening?" PlaceholderColor="Gray" TextColor="Black" AutoSize="TextChanges" FontSize="18" HeightRequest="150" />
+            
+            <Label Text="Add Media" FontAttributes="Bold" FontSize="14" Margin="0,10,0,0" TextColor="#1DA1F2" />
+            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                <Entry x:Name="ImageUrlEntry" Placeholder="Image URL or Path" PlaceholderColor="Gray" TextColor="Black" VerticalOptions="Center"/>
+                <Button Grid.Column="1" Text="Choose File" Clicked="OnChooseImageClicked" BackgroundColor="#E1F5FE" TextColor="#1DA1F2" CornerRadius="10" Padding="15,0"/>
+            </Grid>
+
+            <Border x:Name="ImagePreviewContainer" StrokeThickness="0" HeightRequest="200" IsVisible="false" BackgroundColor="#F0F0F0">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="12"/>
                 </Border.StrokeShape>

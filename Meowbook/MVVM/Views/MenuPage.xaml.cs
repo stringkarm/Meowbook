@@ -12,19 +12,38 @@ public partial class MenuPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        if (GlobalState.CurrentUser != null)
-        {
-            MenuNameLabel.Text = GlobalState.CurrentUser.Name;
-            if (!string.IsNullOrEmpty(GlobalState.CurrentUser.Avatar))
+            if (GlobalState.CurrentUser != null)
             {
-                MenuProfileImage.Source = ImageSource.FromUri(new Uri(GlobalState.CurrentUser.Avatar));
+                MenuNameLabel.Text = GlobalState.CurrentUser.Name;
+                if (!string.IsNullOrEmpty(GlobalState.CurrentUser.Avatar))
+                {
+                    string path = GlobalState.CurrentUser.Avatar;
+                    try 
+                    {
+                        if (path.StartsWith("http") || path.StartsWith("https"))
+                        {
+                            MenuProfileImage.Source = ImageSource.FromUri(new Uri(path));
+                        }
+                        else
+                        {
+                            MenuProfileImage.Source = ImageSource.FromFile(path);
+                        }
+                    }
+                    catch 
+                    {
+                        MenuProfileImage.Source = "profileplaceholder.png";
+                    }
+                }
+                else
+                {
+                    MenuProfileImage.Source = "profileplaceholder.png";
+                }
             }
-        }
     }
 
     private async void OnViewProfileClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("UserProfilePage"); // Or MyProfilePage. Let's use MyProfilePage
+        await Shell.Current.GoToAsync("///MyProfilePage");
     }
 
     private async void OnEditProfileClicked(object sender, EventArgs e)

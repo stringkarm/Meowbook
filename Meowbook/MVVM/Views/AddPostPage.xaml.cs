@@ -13,18 +13,61 @@ namespace Meowbook.Views
         {
             InitializeComponent();
             _apiService = new ApiService();
-            ImageUrlEntry.TextChanged += (s, e) => 
+            ImageUrlEntry.TextChanged += OnImageUrlTextChanged;
+        }
+
+        private void OnImageUrlTextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateImagePreview(e.NewTextValue);
+        }
+
+        private async void OnChooseImageClicked(object sender, EventArgs e)
+        {
+            try
             {
-                if (!string.IsNullOrWhiteSpace(e.NewTextValue))
+                var result = await FilePicker.Default.PickAsync(new PickOptions
                 {
-                    PreviewImage.Source = ImageSource.FromUri(new Uri(e.NewTextValue));
-                    ImagePreviewContainer.IsVisible = true;
+                    PickerTitle = "Please select an image",
+                    FileTypes = FilePickerFileType.Images
+                });
+
+                if (result != null)
+                {
+                    ImageUrlEntry.Text = result.FullPath;
+                    UpdateImagePreview(result.FullPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Could not select image: {ex.Message}", "OK");
+            }
+        }
+
+        private void UpdateImagePreview(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                ImagePreviewContainer.IsVisible = false;
+                return;
+            }
+
+            try
+            {
+                if (path.StartsWith("http") || path.StartsWith("https"))
+                {
+                    PreviewImage.Source = ImageSource.FromUri(new Uri(path));
                 }
                 else
                 {
-                    ImagePreviewContainer.IsVisible = false;
+                    // Handle local file path
+                    PreviewImage.Source = ImageSource.FromFile(path);
                 }
-            };
+                ImagePreviewContainer.IsVisible = true;
+            }
+            catch
+            {
+                ImagePreviewContainer.IsVisible = false;
+            }
         }
 
         protected override async void OnAppearing()

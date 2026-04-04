@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using Meowbook.ViewModels;
+using System;
 
 namespace Meowbook.Views
 {
@@ -9,6 +10,14 @@ namespace Meowbook.Views
         {
             InitializeComponent();
             BindingContext = new SearchViewModel();
+        }
+
+        private async void OnUserSelected(object sender, EventArgs e)
+        {
+            if (sender is VisualElement element && element.BindingContext is Meowbook.Models.User user)
+            {
+                await Meowbook.Services.GlobalState.NavigateToProfile(user.Id);
+            }
         }
     }
 }

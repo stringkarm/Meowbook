@@ -28,7 +28,22 @@ namespace Meowbook.Views
 
                 if (!string.IsNullOrEmpty(GlobalState.CurrentUser.Avatar))
                 {
-                    ProfileCoverImage.Source = ImageSource.FromUri(new Uri(GlobalState.CurrentUser.Avatar));
+                    string path = GlobalState.CurrentUser.Avatar;
+                    try 
+                    {
+                        if (path.StartsWith("http") || path.StartsWith("https"))
+                        {
+                            ProfileCoverImage.Source = ImageSource.FromUri(new Uri(path));
+                        }
+                        else
+                        {
+                            ProfileCoverImage.Source = ImageSource.FromFile(path);
+                        }
+                    }
+                    catch 
+                    {
+                        ProfileCoverImage.Source = null;
+                    }
                 }
 
                 // Dynamically fetch and filter user posts

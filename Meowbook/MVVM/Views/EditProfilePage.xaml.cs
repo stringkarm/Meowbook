@@ -25,6 +25,10 @@ namespace Meowbook.Views
                 UsernameEntry.Text = GlobalState.CurrentUser.Username;
                 AvatarEntry.Text = GlobalState.CurrentUser.Avatar;
                 BioEditor.Text = GlobalState.CurrentUser.Bio;
+                
+                AvatarEntry.TextChanged += (s, e) => UpdateAvatarPreview(e.NewTextValue);
+                UpdateAvatarPreview(GlobalState.CurrentUser.Avatar);
+
                 if (DateTime.TryParse(GlobalState.CurrentUser.Birthdate, out DateTime parsedDate))
                 {
                     BirthdatePicker.Date = parsedDate;
@@ -34,6 +38,53 @@ namespace Meowbook.Views
                 this.FadeTo(1, 400, Easing.CubicOut),
                 this.TranslateTo(0, 0, 400, Easing.CubicOut)
             );
+        }
+
+        private async void OnChooseAvatarClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = await FilePicker.Default.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Please select a profile photo",
+                    FileTypes = FilePickerFileType.Images
+                });
+
+                if (result != null)
+                {
+                    AvatarEntry.Text = result.FullPath;
+                    UpdateAvatarPreview(result.FullPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Could not select image: {ex.Message}", "OK");
+            }
+        }
+
+        private void UpdateAvatarPreview(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                AvatarPreviewImage.Source = "profileplaceholder.png";
+                return;
+            }
+
+            try
+            {
+                if (path.StartsWith("http") || path.StartsWith("https"))
+                {
+                    AvatarPreviewImage.Source = ImageSource.FromUri(new Uri(path));
+                }
+                else
+                {
+                    AvatarPreviewImage.Source = ImageSource.FromFile(path);
+                }
+            }
+            catch
+            {
+                AvatarPreviewImage.Source = "profileplaceholder.png";
+            }
         }
 
         private async void OnSaveClicked(object sender, EventArgs e)

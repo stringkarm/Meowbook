@@ -10,17 +10,33 @@
     <Grid>
         <ScrollView>
             <VerticalStackLayout Padding="20" Spacing="15">
-                <Frame Padding="15" CornerRadius="12" BackgroundColor="White" BorderColor="Transparent">
+                <Frame Padding="15" CornerRadius="12" BackgroundColor="White" BorderColor="Transparent" HasShadow="True">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnViewProfileClicked" />
                     </Frame.GestureRecognizers>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="#F0F0F0" />
+                                        <Setter Property="Scale" Value="0.98" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
                     <HorizontalStackLayout Spacing="15">
-                        <Frame Padding="0" HeightRequest="60" WidthRequest="60" CornerRadius="30" IsClippedToBounds="True">
+                        <Border Padding="0" HeightRequest="60" WidthRequest="60" Stroke="#A64BFF" StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="30"/>
+                            </Border.StrokeShape>
                             <Image x:Name="MenuProfileImage" Aspect="AspectFill"/>
-                        </Frame>
+                        </Border>
                         <VerticalStackLayout VerticalOptions="Center">
-                            <Label x:Name="MenuNameLabel" FontSize="18" FontAttributes="Bold"/>
-                            <Label Text="Welcome back!" TextColor="Gray" FontSize="14"/>
+                            <Label x:Name="MenuNameLabel" FontSize="20" FontAttributes="Bold" TextColor="#1C1C1C"/>
+                            <Label Text="Welcome back!" TextColor="#A64BFF" FontSize="14" FontAttributes="Italic"/>
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
                 </Frame>

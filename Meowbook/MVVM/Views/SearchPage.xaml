@@ -21,6 +21,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:User">
                     <Frame Margin="0,0,0,10" Padding="15" CornerRadius="10" BorderColor="Transparent" BackgroundColor="White">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUserSelected" />
+                        </Frame.GestureRecognizers>
                         <HorizontalStackLayout Spacing="15">
                             <Frame Padding="0" HeightRequest="50" WidthRequest="50" CornerRadius="25" IsClippedToBounds="True" BorderColor="#1DA1F2">
                                 <Image Source="{Binding Avatar}" Aspect="AspectFill"/>

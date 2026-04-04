@@ -24,9 +24,18 @@
                         <Label Text="Birthdate" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
                         <DatePicker x:Name="BirthdatePicker" Format="yyyy-MM-dd" />
                     </VerticalStackLayout>
-                    <VerticalStackLayout>
-                        <Label Text="Avatar URL" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
-                        <Entry x:Name="AvatarEntry" Placeholder="Profile Image URL" />
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Profile Avatar" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
+                        <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                            <Entry x:Name="AvatarEntry" Placeholder="Profile Image URL or Path" VerticalOptions="Center"/>
+                            <Button Grid.Column="1" Text="Choose Photo" Clicked="OnChooseAvatarClicked" BackgroundColor="#E1F5FE" TextColor="#1DA1F2" CornerRadius="10" Padding="15,0"/>
+                        </Grid>
+                        <Border x:Name="AvatarPreviewContainer" StrokeThickness="2" HeightRequest="100" WidthRequest="100" HorizontalOptions="Start" Stroke="#1DA1F2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="50"/>
+                            </Border.StrokeShape>
+                            <Image x:Name="AvatarPreviewImage" Aspect="AspectFill" BackgroundColor="#F0F0F0" />
+                        </Border>
                     </VerticalStackLayout>
                     <VerticalStackLayout>
                         <Label Text="About Me (Bio)" FontSize="14" TextColor="#888" FontAttributes="Bold"/>
