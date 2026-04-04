@@ -17,12 +17,15 @@ namespace Meowbook.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            this.Opacity = 0;
-            this.TranslationY = 25;
             await Task.WhenAll(
                 this.FadeTo(1, 400, Easing.CubicOut),
                 this.TranslateTo(0, 0, 400, Easing.CubicOut)
             );
+        }
+
+        private async void OnBackClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("..");
         }
 
         private async void OnChangePasswordClicked(object sender, EventArgs e)

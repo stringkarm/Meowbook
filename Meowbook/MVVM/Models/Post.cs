@@ -40,5 +40,9 @@ namespace Meowbook.Models
         [ObservableProperty]
         [property: JsonPropertyName("shares")]
         private int _shares;
+
+        [ObservableProperty]
+        [property: JsonPropertyName("createdAt")]
+        private DateTime _createdAt;
     }
 }

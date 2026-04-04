@@ -2,6 +2,7 @@ using Microsoft.Maui.Controls;
 using Meowbook.Services;
 using Meowbook.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace Meowbook.Views
 {
@@ -13,21 +14,48 @@ namespace Meowbook.Views
         {
             InitializeComponent();
             _apiService = new ApiService();
-            ImageUrlEntry.TextChanged += OnImageUrlTextChanged;
+
+            // Setup User Data for the Header
+            LoadUserData();
         }
 
-        private void OnImageUrlTextChanged(object sender, TextChangedEventArgs e)
+        private void LoadUserData()
         {
-            UpdateImagePreview(e.NewTextValue);
+            // Provides the profile picture and name at the top of the page
+            UserNameLabel.Text = GlobalState.CurrentUser?.Name ?? "Meowbook User";
+
+            if (!string.IsNullOrEmpty(GlobalState.CurrentUser?.Avatar))
+            {
+                UserAvatarImg.Source = GlobalState.CurrentUser.Avatar;
+            }
         }
 
+        private void OnContentTextChanged(object sender, TextChangedEventArgs e)
+        {
+            bool hasContent = !string.IsNullOrWhiteSpace(e.NewTextValue);
+            PostBtn.IsEnabled = hasContent;
+
+            // Update button appearance based on state
+            if (hasContent)
+            {
+                PostBtn.BackgroundColor = Color.FromArgb("#007AFF"); // iOS Blue style
+                PostBtn.TextColor = Colors.White;
+            }
+            else
+            {
+                PostBtn.BackgroundColor = Color.FromArgb("#E0E0E0");
+                PostBtn.TextColor = Color.FromArgb("#8E8E8E");
+            }
+        }
+
+        // Logic for the Photo (Gallery) Icon
         private async void OnChooseImageClicked(object sender, EventArgs e)
         {
             try
             {
                 var result = await FilePicker.Default.PickAsync(new PickOptions
                 {
-                    PickerTitle = "Please select an image",
+                    PickerTitle = "Select a photo",
                     FileTypes = FilePickerFileType.Images
                 });
 
@@ -39,7 +67,20 @@ namespace Meowbook.Views
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", $"Could not select image: {ex.Message}", "OK");
+                await DisplayAlert("Error", $"Gallery access failed: {ex.Message}", "OK");
+            }
+        }
+
+        // Logic for the URL Icon (matches OnUrlIconClicked in XAML)
+        private async void OnUrlIconClicked(object sender, EventArgs e)
+        {
+            string result = await DisplayPromptAsync("External Image",
+                "Paste the image link here:", "Add", "Cancel", "https://...");
+
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                ImageUrlEntry.Text = result;
+                UpdateImagePreview(result);
             }
         }
 
@@ -59,7 +100,6 @@ namespace Meowbook.Views
                 }
                 else
                 {
-                    // Handle local file path
                     PreviewImage.Source = ImageSource.FromFile(path);
                 }
                 ImagePreviewContainer.IsVisible = true;
@@ -70,15 +110,25 @@ namespace Meowbook.Views
             }
         }
 
+        // Logic for the 'X' button on the image (matches OnRemoveImageClicked in XAML)
+        private void OnRemoveImageClicked(object sender, EventArgs e)
+        {
+            ImageUrlEntry.Text = string.Empty;
+            ImagePreviewContainer.IsVisible = false;
+            PreviewImage.Source = null;
+        }
+
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            // Slide up like a bottom sheet
+
+            // "Bottom Sheet" slide-up animation
             this.TranslationY = this.Height;
             this.Opacity = 0;
+
             await Task.WhenAll(
-                this.TranslateTo(0, 0, 380, Easing.CubicOut),
-                this.FadeTo(1, 250, Easing.Linear)
+                this.TranslateTo(0, 0, 400, Easing.CubicOut),
+                this.FadeTo(1, 200, Easing.Linear)
             );
         }
 
@@ -86,6 +136,7 @@ namespace Meowbook.Views
         {
             ContentEditor.Text = string.Empty;
             ImageUrlEntry.Text = string.Empty;
+
             await Shell.Current.GoToAsync("///HomePage");
         }
 
@@ -93,45 +144,36 @@ namespace Meowbook.Views
         {
             if (string.IsNullOrWhiteSpace(ContentEditor.Text))
             {
-                await DisplayAlert("Error", "Post content cannot be empty", "OK");
+                await DisplayAlert("Meowbook", "Please write something first!", "OK");
                 return;
             }
-
-            // Button bounce feedback
-            await PostBtn.ScaleTo(0.92, 70, Easing.CubicIn);
-            await PostBtn.ScaleTo(1.0, 70, Easing.CubicOut);
 
             PostBtn.IsEnabled = false;
 
             var newPost = new Post
             {
                 UserId = GlobalState.CurrentUserId,
-                UserName = GlobalState.CurrentUser?.Name ?? "Unknown",
+                UserName = GlobalState.CurrentUser?.Name ?? "User",
                 UserAvatar = GlobalState.CurrentUser?.Avatar ?? "",
                 Content = ContentEditor.Text,
                 ImageUrl = ImageUrlEntry.Text,
-                Likes = 0,
-                Comments = 0,
-                Shares = 0
+                CreatedAt = DateTime.Now
             };
 
             bool success = await _apiService.CreatePostAsync(newPost);
-            
-            PostBtn.IsEnabled = true;
 
             if (success)
             {
                 ContentEditor.Text = string.Empty;
                 ImageUrlEntry.Text = string.Empty;
-                // Fade out before going back
-                await this.FadeTo(0, 250, Easing.CubicIn);
                 await Shell.Current.GoToAsync("///HomePage");
-                this.Opacity = 1;
             }
             else
             {
-                await DisplayAlert("Error", "Failed to create post", "OK");
+                await DisplayAlert("Error", "Could not create post.", "OK");
             }
+
+            PostBtn.IsEnabled = true;
         }
     }
 }

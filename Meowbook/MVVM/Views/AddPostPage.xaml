@@ -3,30 +3,166 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Meowbook.Views.AddPostPage"
              BackgroundColor="White"
-             Title="New Post">
-             
-    <Grid RowDefinitions="Auto,*,Auto" Padding="16">
-        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
-            <Button Grid.Column="0" Text="Cancel" BackgroundColor="Transparent" TextColor="Black" Clicked="OnCancelClicked"/>
-            <Label Grid.Column="1" Text="New Post" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <Button Grid.Column="2" Text="Post" BackgroundColor="#1DA1F2" TextColor="White" CornerRadius="15" Clicked="OnPostClicked" x:Name="PostBtn"/>
-        </Grid>
-        
-        <VerticalStackLayout Grid.Row="1" Spacing="15" Margin="0,20,0,0">
-            <Editor x:Name="ContentEditor" Placeholder="What's happening?" PlaceholderColor="Gray" TextColor="Black" AutoSize="TextChanges" FontSize="18" HeightRequest="150" />
-            
-            <Label Text="Add Media" FontAttributes="Bold" FontSize="14" Margin="0,10,0,0" TextColor="#1DA1F2" />
-            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
-                <Entry x:Name="ImageUrlEntry" Placeholder="Image URL or Path" PlaceholderColor="Gray" TextColor="Black" VerticalOptions="Center"/>
-                <Button Grid.Column="1" Text="Choose File" Clicked="OnChooseImageClicked" BackgroundColor="#E1F5FE" TextColor="#1DA1F2" CornerRadius="10" Padding="15,0"/>
-            </Grid>
+             Shell.NavBarIsVisible="False">
 
-            <Border x:Name="ImagePreviewContainer" StrokeThickness="0" HeightRequest="200" IsVisible="false" BackgroundColor="#F0F0F0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="12"/>
-                </Border.StrokeShape>
-                <Image x:Name="PreviewImage" Aspect="AspectFill" />
-            </Border>
+    <Grid RowDefinitions="Auto,*,Auto" Padding="0">
+
+        <!-- Custom Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="40,*,Auto" Padding="15,45,15,10" BackgroundColor="White">
+            <ImageButton Grid.Column="0" Source="close.png" Aspect="AspectFit" HeightRequest="20" WidthRequest="20" Clicked="OnCancelClicked" BackgroundColor="Transparent">
+                <ImageButton.Behaviors>
+                    <!-- Fallback if close.png is missing -->
+                </ImageButton.Behaviors>
+            </ImageButton>
+            <Label Grid.Column="1" Text="Create Post" FontFamily="PoppinsBold" FontAttributes="Bold" FontSize="18" TextColor="#1C1C1C" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Button Grid.Column="2" x:Name="PostBtn" Text="Post" FontFamily="PoppinsRegular" BackgroundColor="#E0E0E0" TextColor="#8E8E8E" CornerRadius="20" Clicked="OnPostClicked" HeightRequest="38" WidthRequest="85" Padding="0" FontAttributes="Bold" IsEnabled="False"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Padding="20,10">
+            <VerticalStackLayout Spacing="15">
+
+                <!-- User Info Profile Section -->
+                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Border Padding="0" HeightRequest="45" WidthRequest="45" StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="22.5"/>
+                        </Border.StrokeShape>
+                        <Image x:Name="UserAvatarImg" Aspect="AspectFill" Source="profile_placeholder.png"/>
+                    </Border>
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                            <Label x:Name="UserNameLabel" Text="Martin Kantor" FontFamily="PoppinsRegular" FontAttributes="Bold" FontSize="16" TextColor="#1C1C1C"/>
+                        </HorizontalStackLayout>
+                        <!-- Space for privacy selector if needed -->
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+
+                <!-- Post Content Editor -->
+                <Editor x:Name="ContentEditor" 
+                        Placeholder="What is your purr moments?" 
+                        PlaceholderColor="#9E9E9E" 
+                        TextColor="Black" 
+                        FontFamily="IntetRegular"
+                        AutoSize="TextChanges" 
+                        FontSize="18" 
+                        Margin="0,5"
+                        MinimumHeightRequest="200"
+                        TextChanged="OnContentTextChanged"/>
+
+                <!-- Image Preview Area -->
+                <Border x:Name="ImagePreviewContainer" StrokeThickness="0" IsVisible="False" Margin="0,10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <Grid>
+                        <Image x:Name="PreviewImage" Aspect="AspectFill" HeightRequest="250" />
+                        <Button Text="✕" Clicked="OnRemoveImageClicked" HorizontalOptions="End" VerticalOptions="Start" Margin="10" BackgroundColor="#B3000000" TextColor="White" HeightRequest="30" WidthRequest="30" CornerRadius="15"/>
+                    </Grid>
+                </Border>
+
+                <!-- Entry for URL is hidden, but used for logic -->
+                <Entry x:Name="ImageUrlEntry" IsVisible="False" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- "Add to your post" Section -->
+        <VerticalStackLayout Grid.Row="2" Spacing="15" Padding="20,20,20,30" BackgroundColor="White">
+            <BoxView HeightRequest="1" Color="#EEEEEE" Margin="-20,0" />
+
+            <Label Text="Add to your post" FontFamily="PoppinsRegular" FontAttributes="Bold" FontSize="16" TextColor="#1C1C1C"/>
+
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="10">
+                
+                <!-- Photo/Video (Functional) -->
+                <Border Grid.Row="0" Grid.Column="0" BackgroundColor="#F5F6F8" StrokeThickness="0" Padding="12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnChooseImageClicked"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_photo.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Text="Photo/Video" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
+                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- URL/Image Link (Functional) -->
+                <Border Grid.Row="0" Grid.Column="1" BackgroundColor="#F5F6F8" StrokeThickness="0" Padding="12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnUrlIconClicked"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_link.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Text="URL Link" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
+                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- GIF (Placeholder) -->
+                <Border Grid.Row="1" Grid.Column="0" BackgroundColor="#F5F6F8" StrokeThickness="0" Padding="12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_gif.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Text="GIF" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
+                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Poll (Placeholder) -->
+                <Border Grid.Row="1" Grid.Column="1" BackgroundColor="#F5F6F8" StrokeThickness="0" Padding="12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_poll.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Text="Poll" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
+                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Adoption (Placeholder) -->
+                <Border Grid.Row="2" Grid.Column="0" BackgroundColor="#F5F6F8" StrokeThickness="0" Padding="12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_adoption.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Text="Adoption" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
+                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Lost Notice (Placeholder) -->
+                <Border Grid.Row="2" Grid.Column="1" BackgroundColor="#F5F6F8" StrokeThickness="0" Padding="12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_lost.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Text="Lost Notice" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
+                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Event (Placeholder) -->
+                <Border Grid.Row="3" Grid.Column="0" BackgroundColor="#F5F6F8" StrokeThickness="0" Padding="12">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_event.png" HeightRequest="24" WidthRequest="24"/>
+                        <Label Text="Event" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
+                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

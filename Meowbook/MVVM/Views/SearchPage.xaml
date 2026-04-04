@@ -6,42 +6,93 @@
              xmlns:views="clr-namespace:Meowbook.Views"
              x:Class="Meowbook.Views.SearchPage"
              x:DataType="vm:SearchViewModel"
-             Title="Search Users"
-             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False" 
              BackgroundColor="#F5F5F5">
-
+    
     <Grid RowDefinitions="Auto, *">
-        <SearchBar Grid.Row="0"
-                   Text="{Binding SearchText}"
-                   SearchCommand="{Binding PerformSearchCommand}"
-                   Placeholder="Search by name or username..."
-                   Margin="10" />
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding SearchResults}" Margin="10,0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:User">
-                    <Frame Margin="0,0,0,10" Padding="15" CornerRadius="10" BorderColor="Transparent" BackgroundColor="White">
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnUserSelected" />
-                        </Frame.GestureRecognizers>
-                        <HorizontalStackLayout Spacing="15">
-                            <Frame Padding="0" HeightRequest="50" WidthRequest="50" CornerRadius="25" IsClippedToBounds="True" BorderColor="#1DA1F2">
-                                <Image Source="{Binding Avatar}" Aspect="AspectFill"/>
-                            </Frame>
-                            <VerticalStackLayout VerticalOptions="Center">
-                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" TextColor="#1A1A2E"/>
-                                <Label Text="{Binding Username, StringFormat='@{0}'}" FontSize="13" TextColor="Gray"/>
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <Border Grid.Row="0"
+                HeightRequest="160"
+                Margin="0,-40,0,0"
+                BackgroundColor="#E07B00"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Opacity="0.15" Radius="10" Offset="0,4"/>
+            </Border.Shadow>
 
-        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <VerticalStackLayout Padding="30,80,25,10">
+                <Label Text="Find your purr community" 
+                       FontFamily="PoppinsMedium"
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       TextColor="White" />
+            </VerticalStackLayout>
+        </Border>
 
-        <!-- General Bottom Nav Bar -->
+        <Frame Grid.Row="0"
+               VerticalOptions="End"
+               Margin="25,0,25,-25"
+               Padding="10,0"
+               HeightRequest="50"
+               CornerRadius="25"
+               BackgroundColor="White"
+               HasShadow="True"
+               BorderColor="Transparent">
+            <SearchBar Text="{Binding SearchText}"
+                       Placeholder="Search names or breeds..."
+                       PlaceholderColor="Silver"
+                       FontSize="14"
+                       TextColor="#1C1C1C"
+                       SearchCommand="{Binding PerformSearchCommand}"/>
+        </Frame>
+
+        <ScrollView Grid.Row="1" Margin="0,35,0,0">
+            <VerticalStackLayout Padding="20" Spacing="25">
+
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="Recent" FontFamily="InterRegular" FontAttributes="Bold" TextColor="#1C1C1C" VerticalOptions="Center"/>
+          
+                    </HorizontalStackLayout>
+
+                    <FlexLayout Wrap="Wrap" Direction="Row" AlignContent="Start" AlignItems="Start">
+                        <Border Margin="0,0,8,8" Padding="12,6" StrokeShape="RoundRectangle 15" BackgroundColor="White" StrokeThickness="1" Stroke="Silver">
+                            <Label Text="Persian" FontSize="12" TextColor="Gray"/>
+                        </Border>
+                        <Border Margin="0,0,8,8" Padding="12,6" StrokeShape="RoundRectangle 15" BackgroundColor="White" StrokeThickness="1" Stroke="Silver">
+                            <Label Text="Maine Coon" FontSize="12" TextColor="Gray"/>
+                        </Border>
+                    </FlexLayout>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="People" FontAttributes="Bold" TextColor="#1C1C1C"/>
+                    <CollectionView ItemsSource="{Binding SearchResults}" HeightRequest="100">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:User">
+                                <HorizontalStackLayout Spacing="10" Padding="10" BackgroundColor="White">
+                                    <Frame CornerRadius="10" Padding="0" HeightRequest="50" WidthRequest="50" IsClippedToBounds="True">
+                                        <Image Source="{Binding Avatar}" Aspect="AspectFill"/>
+                                    </Frame>
+                                    <VerticalStackLayout VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" FontSize="13" FontAttributes="Bold" TextColor="#1C1C1C"/>
+                                        <Label Text="Suggested" FontSize="11" TextColor="Gray"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}" Color="#FF8C00" HorizontalOptions="Center" VerticalOptions="Center"/>
+
         <views:BottomNavBar Grid.Row="1" ActiveTab="Search" VerticalOptions="End" />
-
     </Grid>
 </ContentPage>
