@@ -3,15 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Meowbook.Views.SettingsPage"
              BackgroundColor="#F5F5F5"
-             Title="Settings &amp; Privacy">
+             Shell.NavBarIsVisible="False">
              
     <Grid RowDefinitions="Auto, *">
         <!-- Header Section (Orange) -->
-        <VerticalStackLayout Grid.Row="0" BackgroundColor="#FF8C00" Padding="20,45,20,40" Spacing="20">
-            <Grid ColumnDefinitions="Auto, *, Auto">
-                <ImageButton Grid.Column="0" Source="back.png" HeightRequest="24" WidthRequest="24" Clicked="OnBackClicked" BackgroundColor="Transparent" Padding="0"/>
+        <VerticalStackLayout Grid.Row="0" BackgroundColor="#FF8C00" Padding="20,30,20,40" Spacing="20">
+            <Grid ColumnDefinitions="40, *, 40">
+                <ImageButton Grid.Column="0" Source="back.png" HeightRequest="20" WidthRequest="20" Clicked="OnBackClicked" BackgroundColor="Transparent" Padding="0" HorizontalOptions="Start"/>
                 <Label Grid.Column="1" Text="Settings &amp; Privacy" FontFamily="PoppinsBold" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <BoxView Grid.Column="2" WidthRequest="24"/> <!-- Spacer -->
             </Grid>
         </VerticalStackLayout>
 
@@ -49,7 +48,7 @@
                                 </Border>
                             </VerticalStackLayout>
 
-                            <Button Text="Update Password" FontFamily="PoppinsBold" FontSize="16" BackgroundColor="#007AFF" TextColor="White" CornerRadius="20" HeightRequest="50" Margin="0,10,0,0" Clicked="OnChangePasswordClicked"/>
+                            <Button Text="Update Password" FontFamily="PoppinsBold" FontSize="16" BackgroundColor="#FF8C00" TextColor="White" CornerRadius="20" HeightRequest="50" Margin="0,10,0,0" Clicked="OnChangePasswordClicked"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
 

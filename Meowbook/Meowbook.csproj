@@ -71,6 +71,7 @@
 	  <None Remove="Resources\Images\facebook.png" />
 	  <None Remove="Resources\Images\getstarted.png" />
 	  <None Remove="Resources\Images\hearticon.png" />
+	  <None Remove="Resources\Images\help.png" />
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\ic_adoption.png" />
 	  <None Remove="Resources\Images\ic_event.png" />
@@ -94,6 +95,7 @@
 	  <None Remove="Resources\Images\seepassword.png" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\shareicon.png" />
+	  <None Remove="Resources\Images\support.png" />
 	  <None Remove="Resources\Images\terms.png" />
 	  <None Remove="Resources\Images\threedots.png" />
 	</ItemGroup>
