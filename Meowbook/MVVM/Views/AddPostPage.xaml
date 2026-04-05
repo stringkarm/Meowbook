@@ -15,7 +15,7 @@
                 </ImageButton.Behaviors>
             </ImageButton>
             <Label Grid.Column="1" Text="Create Post" FontFamily="PoppinsBold" FontAttributes="Bold" FontSize="18" TextColor="#1C1C1C" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <Button Grid.Column="2" x:Name="PostBtn" Text="Post" FontFamily="PoppinsRegular" BackgroundColor="#E0E0E0" TextColor="#8E8E8E" CornerRadius="20" Clicked="OnPostClicked" HeightRequest="38" WidthRequest="85" Padding="0" FontAttributes="Bold" IsEnabled="False"/>
+            <Button Grid.Column="2" x:Name="PostBtn" Text="Post" FontFamily="PoppinsRegular" BackgroundColor="Orange" TextColor="#8E8E8E" CornerRadius="20" Clicked="OnPostClicked" HeightRequest="38" WidthRequest="85" Padding="0" FontAttributes="Bold" IsEnabled="False"/>
         </Grid>
 
         <ScrollView Grid.Row="1" Padding="20,10">
@@ -84,7 +84,7 @@
                     <HorizontalStackLayout Spacing="10">
                         <Image Source="ic_photo.png" HeightRequest="24" WidthRequest="24"/>
                         <Label Text="Photo/Video" FontFamily="PoppinsRegular" VerticalOptions="Center" TextColor="#1C1C1C" FontSize="14" FontAttributes="Bold"/>
-                        <Label Text="+" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
+                        <Label Text="+"  HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="#1C1C1C"/>
                     </HorizontalStackLayout>
                 </Border>
 
