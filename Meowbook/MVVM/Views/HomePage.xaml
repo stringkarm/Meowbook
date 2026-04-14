@@ -21,7 +21,7 @@
                 <Image Source="{Binding LoggedInUserProfileImage}" Aspect="AspectFill"/>
             </Frame>
 
-            <Label Grid.Column="1" Text="Meowbook" FontFamily="PoppinsBold" FontSize="22" FontAttributes="Bold" TextColor="#5A5A5A" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label Grid.Column="1" Text="InstaBay" FontFamily="PoppinsBold" FontSize="22" FontAttributes="Bold" TextColor="#5A5A5A" HorizontalOptions="Center" VerticalOptions="Center"/>
 
             <Frame Grid.Column="2" Padding="0" HeightRequest="55" WidthRequest="55" CornerRadius="27.5" BackgroundColor="#F0F0F0" HasShadow="False" BorderColor="Transparent" VerticalOptions="Center">
                 <Image Source="notifications.png" HeightRequest="30" WidthRequest="30" HorizontalOptions="Center" VerticalOptions="Center"/>

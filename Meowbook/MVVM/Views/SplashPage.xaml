@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Meowbook.Views.SplashPage"
-             BackgroundColor="DarkOrange"
+             BackgroundColor="DarkGrey"
              NavigationPage.HasNavigationBar="False">
 
     <Grid>
@@ -10,12 +10,12 @@
                              HorizontalOptions="Center"
                              Spacing="10">
 
-            <Image Source="logowhite.png"
+            <Image Source="logo.png"
                    WidthRequest="180"
                    HeightRequest="180"
                    Aspect="AspectFit" />
 
-            <Label Text="Meowbook"
+            <Label Text="InstaBay"
                    FontFamily="PoppinsBold"
                    FontSize="36"
                    TextColor="White"

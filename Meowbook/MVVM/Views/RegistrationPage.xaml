@@ -131,7 +131,7 @@
                 </Border>
 
                 <Button Text="Register Now" 
-                        BackgroundColor="#FF8C00" 
+                        BackgroundColor="Black" 
                         TextColor="White"
                         HeightRequest="60" 
                         CornerRadius="20" 

@@ -55,7 +55,7 @@
             </Grid>
         </Border>
 
-        <Border WidthRequest="62" HeightRequest="62" BackgroundColor="DarkOrange" Stroke="White" StrokeThickness="4" HorizontalOptions="Center" VerticalOptions="Start">
+        <Border WidthRequest="62" HeightRequest="62" BackgroundColor="Black" Stroke="White" StrokeThickness="4" HorizontalOptions="Center" VerticalOptions="Start">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="31"/>
             </Border.StrokeShape>

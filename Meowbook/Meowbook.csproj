@@ -80,11 +80,7 @@
 	  <None Remove="Resources\Images\ic_lost.png" />
 	  <None Remove="Resources\Images\ic_photo.png" />
 	  <None Remove="Resources\Images\ic_poll.png" />
-	  <None Remove="Resources\Images\landingpagebg.png" />
-	  <None Remove="Resources\Images\loginpagebg.png" />
-	  <None Remove="Resources\Images\logo.jpg" />
 	  <None Remove="Resources\Images\logout.png" />
-	  <None Remove="Resources\Images\logowhite.png" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\notifications.png" />
 	  <None Remove="Resources\Images\profile.png" />

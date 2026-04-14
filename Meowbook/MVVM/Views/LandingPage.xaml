@@ -13,21 +13,21 @@
 
         <VerticalStackLayout Spacing="20" Padding="50,40" VerticalOptions="End">
 
-            <Label Text="The ultimate community for cat lovers"
-                   FontSize="24" 
+            <Label Text="The Trusted Social Media App"
+                   FontSize="30" 
                    FontFamily="PoppinsBold" 
                    FontAttributes="Bold"
-                   TextColor="#1C1C1C" 
+                   TextColor="Black" 
                    HorizontalTextAlignment="Center" />
 
             <Label Text="Ready to start your journey?" 
-                   TextColor="Gray" 
+                   TextColor="GhostWhite" 
                    HorizontalOptions="Center" 
                    FontFamily="InterRegular"/>
 
             <Button Text="Get Started"
                     Clicked="OnGetStartedClicked"
-                    BackgroundColor="#FF8C00" 
+                    BackgroundColor="Black" 
                     TextColor="White"
                     HeightRequest="60" 
                     CornerRadius="20" 
